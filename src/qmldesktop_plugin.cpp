@@ -7,8 +7,8 @@
 void DesktopPlugin::registerTypes(const char *uri)
 {
     // @uri Material.Desktop
-    qmlRegisterType<MprisConnection>(uri, 1, 0, "MprisConnection");
-    qmlRegisterUncreatableType<Mpris2Player>(uri, 1, 0, "Mpris2Player", "Player class");
+    qmlRegisterType<MprisConnection>(uri, 0, 1, "MprisConnection");
+    qmlRegisterUncreatableType<Mpris2Player>(uri, 0, 1, "Mpris2Player", "Player class");
 }
 
 
