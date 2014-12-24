@@ -1,11 +1,20 @@
-qml-desktop
-==========
+QML Desktop framework
+=====================
 
-This is the repository where the `Material.Desktop`  qml module code is hosted.
+The QML Desktop framework provides a plugin for use in desktop shells built using QML.
 
-###Version
-Current version is `1.0`, so in QML it would look like
-`import Material.Desktop 1.0`
+### How to use
 
-###What is currently offered?
-Currently, there's only a plugin for MPRIS (Media Player Remote Interfacing Specification).
+First, compile and install the plugin:
+
+    qmake
+    make
+    sudo make install
+
+Then, to use in your desktop shell, simply import the framework like this:
+
+    import Material.Desktop 0.1
+
+### Features
+
+Currently, there's only a plugin for MPRIS (Media Player Remote Interfacing Specification). You can use this to control most music plays on Linux.
