@@ -1,6 +1,8 @@
 QML Desktop framework
 =====================
 
+[![Build Status](https://travis-ci.org/quantum-os/qml-desktop.svg?branch=master)](https://travis-ci.org/quantum-os/qml-desktop)
+
 The QML Desktop framework provides a plugin for use in desktop shells built using QML.
 
 ### How to use
