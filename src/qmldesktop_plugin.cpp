@@ -1,10 +1,10 @@
-#include "mprisconnection_plugin.h"
+#include "qmldesktop_plugin.h"
 #include "mprisconnection.h"
 #include "mpris2player.h"
 
 #include <qqml.h>
 
-void MprisConnectionPlugin::registerTypes(const char *uri)
+void DesktopPlugin::registerTypes(const char *uri)
 {
     // @uri Material.Desktop
     qmlRegisterType<MprisConnection>(uri, 1, 0, "MprisConnection");
