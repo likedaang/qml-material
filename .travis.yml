@@ -11,4 +11,4 @@ install:
 script:
 - source /opt/qt53/bin/qt53-env.sh
 - qmake
-- make check
+- sudo make install
