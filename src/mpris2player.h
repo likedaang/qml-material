@@ -3,7 +3,6 @@
 
 #include <QDBusInterface>
 #include <QMap>
-#include <QDebug>
 #include <QVariantMap>
 #include <QDBusArgument>
 
@@ -12,6 +11,7 @@ class Mpris2Player : public QObject
     Q_OBJECT
     Q_PROPERTY(QVariantMap metadata READ metadata NOTIFY metadataNotify)
     Q_PROPERTY(QString name MEMBER name)
+    Q_PROPERTY(QString playbackStatus READ playbackStatus NOTIFY playbackStatusChanged)
 
 public:
 
@@ -38,6 +38,10 @@ public:
           }
          arg.endMap();
          return map;
+    }
+
+    QString playbackStatus() const {
+        return QDBusInterface(this->iface.service(), "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties").call("Get", "org.mpris.MediaPlayer2.Player", "PlaybackStatus").arguments().at(0).value<QDBusVariant>().variant().toString();
     }
 
     Q_INVOKABLE void playPause() {
@@ -76,7 +80,8 @@ public:
     QDBusInterface playerInterface;
     QString name;
 signals:
-    QVariantMap metadataNotify(QVariantMap map);
+    void metadataNotify();
+    void playbackStatusChanged();
 private slots:
     void metadataReceived(QDBusMessage msg) {
         const QDBusArgument &arg = msg.arguments().at(1).value<QDBusArgument>();
@@ -86,7 +91,9 @@ private slots:
             arg.beginMapEntry();
             arg >> key;
             if (key == "Metadata") {
-                emit metadataNotify(metadata());
+                emit metadataNotify();
+            } else if (key == "PlaybackStatus") {
+                emit playbackStatusChanged();
             }
             arg.endMapEntry();
         }
