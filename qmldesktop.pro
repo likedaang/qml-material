@@ -16,7 +16,10 @@ SOURCES += \
 HEADERS += \
     src/mprisconnection.h \
     src/mpris2player.h \
-    src/qmldesktop_plugin.h
+    src/qmldesktop_plugin.h \
+    src/notification.h \
+    src/notificationserver.h \
+    src/notificationadaptor.h
 
 OTHER_FILES = src/qmldir
 
