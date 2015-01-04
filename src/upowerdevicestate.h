@@ -16,36 +16,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NOTIFICATIONSERVER_H
-#define NOTIFICATIONSERVER_H
+#ifndef UPOWERDEVICESTATE
+#define UPOWERDEVICESTATE
 
-#include <QQuickItem>
-#include <QQmlListProperty>
-#include <QList>
-#include <QDBusConnection>
 #include <QObject>
-#include "notification.h"
 
-class NotificationAdaptor;
-
-class NotificationServer : public QQuickItem
-{
+class UPowerDeviceState : public QObject {
     Q_OBJECT
-    Q_DISABLE_COPY(NotificationServer)
-
+    Q_ENUMS(State)
 public:
-    explicit NotificationServer(QQuickItem *parent = new QQuickItem());
-
-public slots:
-    void closeNotification(int id);
-
-private:
-    NotificationAdaptor* adaptor;
-
-signals:
-    void notificationUpdated(int id, QVariant notification);
-    void notificationAdded(int id, QVariant notification);
-    void notificationRemoved(int id);
+    enum State {
+        Unknown = 0, Charging, Discharging, Empty, FullyCharged, PendingCharge, PendingDischarge
+    };
 };
 
-#endif // NOTIFICATIONSERVER_H
+#endif // UPOWERDEVICESTATE
+
