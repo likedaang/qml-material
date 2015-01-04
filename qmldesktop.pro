@@ -11,7 +11,8 @@ INCLUDEPATH = src
 # Input
 SOURCES += \
     src/qmldesktop_plugin.cpp \
-    src/mprisconnection.cpp
+    src/mprisconnection.cpp \
+    src/notificationserver.cpp
 
 HEADERS += \
     src/mprisconnection.h \
