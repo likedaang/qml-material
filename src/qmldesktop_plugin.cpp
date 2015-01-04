@@ -12,7 +12,7 @@ void DesktopPlugin::registerTypes(const char *uri)
     qmlRegisterType<MprisConnection>(uri, 0, 1, "MprisConnection");
     qmlRegisterType<NotificationServer>(uri, 0, 1, "NotificationServer");
     qmlRegisterUncreatableType<Mpris2Player>(uri, 0, 1, "Mpris2Player", "Player class");
-    qmlRegisterUncreatableType<Notification>(uri, 0, 1, "Notifiation", "For NotificationServer");
+    qmlRegisterUncreatableType<Notification>(uri, 0, 1, "Notification", "For NotificationServer");
 }
 
 
