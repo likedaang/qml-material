@@ -19,7 +19,11 @@ HEADERS += \
     src/qmldesktop_plugin.h \
     src/notification.h \
     src/notificationserver.h \
-    src/notificationadaptor.h
+    src/notificationadaptor.h \
+    src/upowerconnection.h \
+    src/upowerdevice.h \
+    src/upowerdevicetype.h \
+    src/upowerdevicestate.h
 
 OTHER_FILES = src/qmldir
 

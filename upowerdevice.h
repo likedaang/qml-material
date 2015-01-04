@@ -1,0 +1,5 @@
+#ifndef UPOWERDEVICE
+#define UPOWERDEVICE
+
+#endif // UPOWERDEVICE
+
