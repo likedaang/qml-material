@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QDBusInterface>
+#include <QDebug>
 #include "upowerdevicetype.h"
 
 class UPowerDevice : public QObject
@@ -43,8 +44,39 @@ class UPowerDevice : public QObject
     Q_PROPERTY(QVariant capacity MEMBER m_capacity)
 
 public:
-    explicit UPowerDevice(QString path, QObject *parent = 0) : QObject(parent), iface("org.freedesktop.UPower", path, "org.freedesktop.UPower.Device", QDBusConnection::systemBus()){
-        QDBusConnection::systemBus().connect(iface.service(), iface.path(), iface.interface(), "Changed", this, SIGNAL(changed()));
+    explicit UPowerDevice(QString path, QObject *parent = 0)
+            : QObject(parent),
+              iface("org.freedesktop.UPower", path, "org.freedesktop.UPower.Device", QDBusConnection::systemBus())
+    {
+        QDBusConnection::systemBus().connect(iface.service(), iface.path(), "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SIGNAL(changed()));
+        QObject::connect(this, &UPowerDevice::changed, this, &UPowerDevice::reload);
+
+        reload();
+    }
+
+    UPowerDeviceType::Type m_type;
+    bool m_powerSupply;
+    QVariant m_online;
+    QVariant m_energy;
+    QVariant m_energyEmpty;
+    QVariant m_energyFull;
+    double m_voltage;
+    QVariant m_energyRate;
+    QVariant m_timeToEmpty;
+    QVariant m_timeToFull;
+    QVariant m_percentage;
+    QVariant m_state;
+    QVariant m_isRechargeable;
+    QVariant m_capacity;
+
+signals:
+    void changed();
+
+private slots:
+
+    void reload() {
+        qDebug() << "Reloading device!";
+
         m_type = static_cast<UPowerDeviceType::Type>(iface.property("Type").toInt());
         if (m_type == UPowerDeviceType::LinePower) {
             m_online = iface.property("Online");
@@ -65,22 +97,6 @@ public:
         m_powerSupply = iface.property("PowerSupply").toBool();
     }
 
-    UPowerDeviceType::Type m_type;
-    bool m_powerSupply;
-    QVariant m_online;
-    QVariant m_energy;
-    QVariant m_energyEmpty;
-    QVariant m_energyFull;
-    double m_voltage;
-    QVariant m_energyRate;
-    QVariant m_timeToEmpty;
-    QVariant m_timeToFull;
-    QVariant m_percentage;
-    QVariant m_state;
-    QVariant m_isRechargeable;
-    QVariant m_capacity;
-signals:
-    void changed();
 private:
     QDBusInterface iface;
 };
