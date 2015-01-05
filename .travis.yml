@@ -12,3 +12,6 @@ script:
 - source /opt/qt53/bin/qt53-env.sh
 - qmake
 - make check
+
+notifications:
+  slack: papyros:qTNflfj4wj3AcYKLJJdpKOa4
