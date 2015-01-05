@@ -17,12 +17,12 @@ void DesktopPlugin::registerTypes(const char *uri)
     qmlRegisterUncreatableType<Mpris2Player>(uri, 0, 1, "Mpris2Player", "Player class");
 
     qmlRegisterType<NotificationServer>(uri, 0, 1, "NotificationServer");
-    qmlRegisterUncreatableType<Notification>(uri, 0, 1, "Notification", "For NotificationServer");
+    qmlRegisterUncreatableType<Notification>(uri, 0, 1, "Notification", "A notification from NotificationServer");
 
     qmlRegisterType<UPowerConnection>(uri, 0, 1, "UPowerConnection");
-    qmlRegisterUncreatableType<UPowerDevice>(uri, 0, 1, "UPowerDevice", "For UPower");
-    qmlRegisterUncreatableType<UPowerDeviceType>(uri, 0, 1, "UPowerDeviceType", "Enum class for type");
-    qmlRegisterUncreatableType<UPowerDeviceState>(uri, 0, 1, "UPowerDeviceState", "Enum class for state");
+    qmlRegisterUncreatableType<UPowerDevice>(uri, 0, 1, "UPowerDevice", "A device reported by UPower");
+    qmlRegisterUncreatableType<UPowerDeviceType>(uri, 0, 1, "UPowerDeviceType", "Enum class for UPower device type");
+    qmlRegisterUncreatableType<UPowerDeviceState>(uri, 0, 1, "UPowerDeviceState", "Enum class for UPower device state");
 }
 
 
