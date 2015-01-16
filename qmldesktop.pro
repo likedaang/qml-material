@@ -12,6 +12,8 @@ INCLUDEPATH = src
 SOURCES += \
     src/qmldesktop_plugin.cpp \
     src/mprisconnection.cpp \
+    src/upowerconnection.cpp \
+    src/upowerdevice.cpp \
     src/notificationserver.cpp
 
 HEADERS += \
@@ -43,4 +45,3 @@ unix {
     target.path = $$installPath
     INSTALLS += target qmldir
 }
-

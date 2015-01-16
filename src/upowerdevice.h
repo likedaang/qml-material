@@ -1,6 +1,7 @@
 /*
  * QML Desktop - Set of tools written in C++ for QML
  * Copyright (C) 2014 Bogdan Cuza <bogdan.cuza@hotmail.com>
+ * Copyright (C) 2015 Michael Spencer <sonrisesoftware@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -27,7 +28,9 @@
 class UPowerDevice : public QObject
 {
     Q_OBJECT
-    //we're using variants not because I am lazy, but because they will return an undefined and it will be idiomatic JavaScript :D
+
+    // We're using variants not because I am lazy, but because they will return an undefined
+    // and it will be idiomatic JavaScript
     Q_PROPERTY(UPowerDeviceType::Type type MEMBER m_type)
     Q_PROPERTY(bool powerSupply MEMBER m_powerSupply)
     Q_PROPERTY(QVariant online MEMBER m_online)
@@ -42,17 +45,10 @@ class UPowerDevice : public QObject
     Q_PROPERTY(QVariant state MEMBER m_state NOTIFY changed)
     Q_PROPERTY(QVariant isRechargeable MEMBER m_isRechargeable)
     Q_PROPERTY(QVariant capacity MEMBER m_capacity)
+    Q_PROPERTY(QVariant vendor MEMBER m_vendor)
 
 public:
-    explicit UPowerDevice(QString path, QObject *parent = 0)
-            : QObject(parent),
-              iface("org.freedesktop.UPower", path, "org.freedesktop.UPower.Device", QDBusConnection::systemBus())
-    {
-        QDBusConnection::systemBus().connect(iface.service(), iface.path(), "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SIGNAL(changed()));
-        QObject::connect(this, &UPowerDevice::changed, this, &UPowerDevice::reload);
-
-        reload();
-    }
+    explicit UPowerDevice(QString path, QObject *parent = 0);
 
     UPowerDeviceType::Type m_type;
     bool m_powerSupply;
@@ -68,38 +64,17 @@ public:
     QVariant m_state;
     QVariant m_isRechargeable;
     QVariant m_capacity;
+    QVariant m_vendor;
 
 signals:
     void changed();
 
 private slots:
 
-    void reload() {
-        qDebug() << "Reloading device!";
-
-        m_type = static_cast<UPowerDeviceType::Type>(iface.property("Type").toInt());
-        if (m_type == UPowerDeviceType::LinePower) {
-            m_online = iface.property("Online");
-        }
-        if (m_type == UPowerDeviceType::Battery) {
-            m_energy = iface.property("Energy");
-            m_energyFull = iface.property("EnergyFull");
-            m_energyEmpty = iface.property("EnergyEmpty");
-            m_energyRate = iface.property("EnergyRate");
-            m_timeToEmpty = iface.property("TimeToEmpty");
-            m_timeToFull = iface.property("TimeToFull");
-            m_percentage = iface.property("Percentage");
-            m_state = iface.property("State");
-            m_isRechargeable = iface.property("IsRechargeable");
-            m_capacity = iface.property("Capacity");
-        }
-        m_voltage = iface.property("Voltage").toBool();
-        m_powerSupply = iface.property("PowerSupply").toBool();
-    }
+    void reload();
 
 private:
     QDBusInterface iface;
 };
 
 #endif // UPOWERDEVICE
-
