@@ -1,7 +1,9 @@
 /*
  * QML Desktop - Set of tools written in C++ for QML
+ *
  * Copyright (C) 2014 Bogdan Cuza <bogdan.cuza@hotmail.com>
- * also Copyright (C) 2014 Ricardo Vieira <ricardo.vieira@tecnico.ulisboa.pt>
+ *               2014 Ricardo Vieira <ricardo.vieira@tecnico.ulisboa.pt>
+ *               2015 Michael Spencer <sonrisesoftware@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -32,29 +34,30 @@ class MprisConnection : public QQuickItem
 {
     Q_OBJECT
     Q_DISABLE_COPY(MprisConnection)
+
     Q_PROPERTY(QQmlListProperty<Mpris2Player> playerList READ getPlayerList NOTIFY playerListChanged)
 
 public:
     MprisConnection(QQuickItem *parent = 0);
-    ~MprisConnection(){
-        delete watcher;
-        while (!playerList.isEmpty())
-                    delete playerList.takeFirst();
-    }
+    ~MprisConnection();
 
-    QList<Mpris2Player*> playerList;
     QQmlListProperty<Mpris2Player> getPlayerList() {
         return QQmlListProperty<Mpris2Player>(this, playerList);
     }
-private:
-    QDBusServiceWatcher *watcher;
+
 public slots:
     void serviceOwnerChanged(const QString &serviceName,
-                                 const QString &oldOwner,
-                                 const QString &newOwner);
+                             const QString &oldOwner,
+                             const QString &newOwner);
+
 signals:
     QQmlListProperty<Mpris2Player> playerListChanged(QQmlListProperty<Mpris2Player> playerList);
+
+
+private:
+    QDBusServiceWatcher *watcher;
+    QList<Mpris2Player*> playerList;
+
 };
 
 #endif // MPRISCONNECTION_H
-

@@ -1,7 +1,9 @@
 /*
  * QML Desktop - Set of tools written in C++ for QML
+ * 
  * Copyright (C) 2014 Bogdan Cuza <bogdan.cuza@hotmail.com>
- * also Copyright (C) 2014 Ricardo Vieira <ricardo.vieira@tecnico.ulisboa.pt>
+ *               2014 Ricardo Vieira <ricardo.vieira@tecnico.ulisboa.pt>
+ *               2015 Michael Spencer <sonrisesoftware@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -22,23 +24,27 @@
 MprisConnection::MprisConnection(QQuickItem *parent):
     QQuickItem(parent)
 {
-    // By default, QQuickItem does not draw anything. If you subclass
-    // QQuickItem to create a visual item, you will need to uncomment the
-    // following line and re-implement updatePaintNode()
-
-    // setFlag(ItemHasContents, true);
     QDBusConnection bus = QDBusConnection::sessionBus();
-        const QStringList services = bus.interface()->registeredServiceNames();
+    const QStringList services = bus.interface()->registeredServiceNames();
 
-        foreach(QString name, services.filter("org.mpris.MediaPlayer2")) {
-            playerList.append(new Mpris2Player(name));
-        }
-        watcher = new QDBusServiceWatcher(QString(), bus);
+    foreach(QString name, services.filter("org.mpris.MediaPlayer2")) {
+        playerList.append(new Mpris2Player(name));
+    }
+    watcher = new QDBusServiceWatcher(QString(), bus);
 
-        connect(watcher, SIGNAL(serviceOwnerChanged(QString, QString, QString)),
-                this, SLOT(serviceOwnerChanged(QString,QString,QString)));
+    connect(watcher, SIGNAL(serviceOwnerChanged(QString, QString, QString)),
+            this, SLOT(serviceOwnerChanged(QString,QString,QString)));
 }
-void MprisConnection::serviceOwnerChanged(const QString &serviceName, const QString &oldOwner, const QString &newOwner) {
+
+MprisConnection::~MprisConnection(){
+    delete watcher;
+    while (!playerList.isEmpty())
+                delete playerList.takeFirst();
+}
+
+void MprisConnection::serviceOwnerChanged(const QString &serviceName,
+        const QString &oldOwner, const QString &newOwner)
+{
     if (oldOwner.isEmpty() && serviceName.startsWith("org.mpris.MediaPlayer2.")) {
                 playerList.append(new Mpris2Player(serviceName));
                 emit playerListChanged(QQmlListProperty<Mpris2Player>(this, playerList));

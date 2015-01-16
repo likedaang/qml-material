@@ -12,6 +12,7 @@ INCLUDEPATH = src
 SOURCES += \
     src/qmldesktop_plugin.cpp \
     src/mprisconnection.cpp \
+    src/mpris2player.cpp \
     src/upowerconnection.cpp \
     src/upowerdevice.cpp \
     src/notificationserver.cpp
