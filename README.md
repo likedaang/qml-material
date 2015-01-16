@@ -1,7 +1,7 @@
 QML Desktop
 =====================
 
-[![Build Status](https://travis-ci.org/quantum-os/qml-desktop.svg?branch=master)](https://travis-ci.org/quantum-os/qml-desktop)
+[![Build Status](https://travis-ci.org/papyros/qml-desktop.svg?branch=master)](https://travis-ci.org/papyros/qml-desktop)
 
 The QML Desktop framework provides a plugin for QML that exposes different system-integrated DBus "components" that are useful for desktop shells as well as apps that would like to get access to notifications or music players, for example.
 
