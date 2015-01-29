@@ -5,6 +5,7 @@ before_install:
 install:
 - sudo add-apt-repository -y ppa:beineri/opt-qt532
 - sudo apt-get update
+- sudo apt-get -y install alsa-base alsa-utils libasound2
 - sudo apt-get -y install qt53declarative
 - sudo apt-get -y install pep8 pyflakes libpulse-dev
 - sudo apt-get -y install qt53quickcontrols qt53graphicaleffects
