@@ -27,7 +27,7 @@
 #include <QDBusReply>
 #include <QDBusConnectionInterface>
 #include <QVariantList>
-#include <mpris2player.h>
+#include "mpris2player.h"
 #include <QQmlListProperty>
 
 class MprisConnection : public QQuickItem

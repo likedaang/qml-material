@@ -18,7 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
- #include "upowerdevice.h"
+#include "upowerdevice.h"
+
 
 UPowerDevice::UPowerDevice(QString path, QObject *parent)
         : QObject(parent),

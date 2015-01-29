@@ -1,7 +1,26 @@
-#ifndef MPRISCONNECTION_PLUGIN_H
-#define MPRISCONNECTION_PLUGIN_H
+#ifndef DESKTOP_PLUGIN_H
+#define DESKTOP_PLUGIN_H
 
 #include <QQmlExtensionPlugin>
+#include <qqml.h>
+
+#include "mpris/mprisconnection.h"
+#include "mpris/mpris2player.h"
+
+#include "notifications/notification.h"
+#include "notifications/notificationserver.h"
+
+#include "upower/upowerconnection.h"
+#include "upower/upowerdevicetype.h"
+#include "upower/upowerdevicestate.h"
+#include "upower/upowerdevice.h"
+
+#include "mixer/sound.h"
+
+#include "keyeventfilter/keyeventfilter.h"
+
+#include "desktop/desktopfile.h"
+#include "desktop/desktopscrobbler.h"
 
 class DesktopPlugin : public QQmlExtensionPlugin
 {
@@ -12,5 +31,4 @@ public:
     void registerTypes(const char *uri);
 };
 
-#endif // MPRISCONNECTION_PLUGIN_H
-
+#endif // DESKTOP_PLUGIN_H

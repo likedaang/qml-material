@@ -20,7 +20,12 @@ Then, to use in your desktop shell, simply import the framework like this:
 ### Components
  - MprisConnection
  - NotificationServer
- - UPowerConnection
+ - UPower
+ - DesktopFile + Scrobbler
+ - Sound + Mixer
+ - KeyEventFilter
  
 ### To Do
  - Add documentation
+ - Port other components to qquicklist for animations
+ - Add tests

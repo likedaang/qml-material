@@ -27,7 +27,7 @@
 #include "notification.h"
 #include <QDebug>
 #include <QQmlListProperty>
-#include <notificationserver.h>
+#include "notificationserver.h"
 
 class NotificationAdaptor : public QDBusAbstractAdaptor
 {

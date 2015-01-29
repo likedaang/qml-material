@@ -1,16 +1,4 @@
 #include "qmldesktop_plugin.h"
-#include "mprisconnection.h"
-#include "notification.h"
-#include "notificationserver.h"
-#include "upowerconnection.h"
-#include "upowerdevicetype.h"
-#include "upowerdevicestate.h"
-#include "upowerdevice.h"
-#include "mpris2player.h"
-#include "mixer/sound.h"
-#include "keyeventfilter.h"
-
-#include <qqml.h>
 
 void DesktopPlugin::registerTypes(const char *uri)
 {
@@ -29,4 +17,8 @@ void DesktopPlugin::registerTypes(const char *uri)
     qmlRegisterType<Sound>(uri, 0, 1, "Sound");
 
     qmlRegisterType<KeyEventFilter>(uri, 0, 1, "KeyEventFilter");
+
+    qmlRegisterType<DesktopFile>(uri, 0, 1, "DesktopFile");
+    qmlRegisterType<DesktopScrobbler>(uri, 0, 1, "DesktopScrobbler");
+    qmlRegisterUncreatableType<QObjectListModel>(uri, 0, 1, "QObjectListModel", "For cool animations");
 }

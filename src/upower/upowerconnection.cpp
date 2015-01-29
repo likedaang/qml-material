@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
- #include <upowerconnection.h>
+#include "upowerconnection.h"
 
 UPowerConnection::UPowerConnection(QQuickItem *parent)
         : QQuickItem(parent),

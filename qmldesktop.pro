@@ -12,33 +12,38 @@ LIBS += -lpulse -lpulse-mainloop-glib
 # Input
 SOURCES += \
     src/qmldesktop_plugin.cpp \
-    src/mprisconnection.cpp \
-    src/mpris2player.cpp \
-    src/upowerconnection.cpp \
-    src/upowerdevice.cpp \
-    src/notificationserver.cpp \
+    src/mpris/mprisconnection.cpp \
+    src/mpris/mpris2player.cpp \
+    src/upower/upowerconnection.cpp \
+    src/upower/upowerdevice.cpp \
+    src/notifications/notificationserver.cpp \
     src/mixer/sound.cpp \
     src/mixer/alsamixer.cpp \
     src/mixer/pulseaudiomixer.cpp \
-    src/keyeventfilter.cpp
+    src/keyeventfilter/keyeventfilter.cpp \
+    src/qquicklist/qobjectlistmodel.cpp \
+    src/desktop/desktopfile.cpp \
+    src/desktop/desktopscrobbler.cpp
 
 HEADERS += \
-    src/mprisconnection.h \
-    src/mpris2player.h \
+    src/mpris/mprisconnection.h \
+    src/mpris/mpris2player.h \
     src/qmldesktop_plugin.h \
-    src/notification.h \
-    src/notificationserver.h \
-    src/notificationadaptor.h \
-    src/upowerconnection.h \
-    src/upowerdevice.h \
-    src/upowerdevicetype.h \
-    src/upowerdevicestate.h \
-    src/upowerdevice.cpp \
-    src/notificationserver.cpp \
+    src/notifications/notification.h \
+    src/notifications/notificationserver.h \
+    src/notifications/notificationadaptor.h \
+    src/upower/upowerconnection.h \
+    src/upower/upowerdevice.h \
+    src/upower/upowerdevicetype.h \
+    src/upower/upowerdevicestate.h \
     src/mixer/sound.h \
     src/mixer/alsamixer.h \
     src/mixer/pulseaudiomixer.h \
-    src/keyeventfilter.h
+    src/keyeventfilter/keyeventfilter.h \
+    src/qquicklist/qobjectlistmodel.h \
+    src/qquicklist/qquicklist.h \
+    src/desktop/desktopfile.h \
+    src/desktop/desktopscrobbler.h
 
 OTHER_FILES = src/qmldir
 
