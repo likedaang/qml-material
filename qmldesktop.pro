@@ -2,6 +2,7 @@ TEMPLATE = lib
 TARGET = MaterialDesktop
 QT += qml quick dbus
 CONFIG += qt plugin c++11
+PKGCONFIG += glib-2.0
 
 TARGET = $$qtLibraryTarget($$TARGET)
 uri = Material.Desktop
