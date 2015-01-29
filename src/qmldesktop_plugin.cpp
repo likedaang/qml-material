@@ -7,6 +7,8 @@
 #include "upowerdevicestate.h"
 #include "upowerdevice.h"
 #include "mpris2player.h"
+#include "mixer/sound.h"
+#include "keyeventfilter.h"
 
 #include <qqml.h>
 
@@ -23,6 +25,8 @@ void DesktopPlugin::registerTypes(const char *uri)
     qmlRegisterUncreatableType<UPowerDevice>(uri, 0, 1, "UPowerDevice", "A device reported by UPower");
     qmlRegisterUncreatableType<UPowerDeviceType>(uri, 0, 1, "UPowerDeviceType", "Enum class for UPower device type");
     qmlRegisterUncreatableType<UPowerDeviceState>(uri, 0, 1, "UPowerDeviceState", "Enum class for UPower device state");
+
+    qmlRegisterType<Sound>(uri, 0, 1, "Sound");
+
+    qmlRegisterType<KeyEventFilter>(uri, 0, 1, "KeyEventFilter");
 }
-
-

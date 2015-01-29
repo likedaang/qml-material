@@ -1,12 +1,13 @@
 TEMPLATE = lib
 TARGET = MaterialDesktop
 QT += qml quick dbus
-CONFIG += qt plugin
+CONFIG += qt plugin c++11
 
 TARGET = $$qtLibraryTarget($$TARGET)
 uri = Material.Desktop
 
-INCLUDEPATH = src
+INCLUDEPATH = src /usr/include/glib-2.0 /usr/lib/glib-2.0/include/
+LIBS += -lpulse -lpulse-mainloop-glib
 
 # Input
 SOURCES += \
@@ -15,7 +16,11 @@ SOURCES += \
     src/mpris2player.cpp \
     src/upowerconnection.cpp \
     src/upowerdevice.cpp \
-    src/notificationserver.cpp
+    src/notificationserver.cpp \
+    src/mixer/sound.cpp \
+    src/mixer/alsamixer.cpp \
+    src/mixer/pulseaudiomixer.cpp \
+    src/keyeventfilter.cpp
 
 HEADERS += \
     src/mprisconnection.h \
@@ -27,7 +32,13 @@ HEADERS += \
     src/upowerconnection.h \
     src/upowerdevice.h \
     src/upowerdevicetype.h \
-    src/upowerdevicestate.h
+    src/upowerdevicestate.h \
+    src/upowerdevice.cpp \
+    src/notificationserver.cpp \
+    src/mixer/sound.h \
+    src/mixer/alsamixer.h \
+    src/mixer/pulseaudiomixer.h \
+    src/keyeventfilter.h
 
 OTHER_FILES = src/qmldir
 
