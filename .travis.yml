@@ -1,3 +1,4 @@
+compiler: clang
 before_install:
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
@@ -10,7 +11,7 @@ install:
 - sudo apt-get -y install qt53tools
 script:
 - source /opt/qt53/bin/qt53-env.sh
-- qmake
+- qmake -spec linux-clang
 - make check
 
 notifications:
