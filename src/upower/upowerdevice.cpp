@@ -42,7 +42,8 @@ void UPowerDevice::reload()
 
     if (m_type == UPowerDeviceType::LinePower) {
         m_online = iface.property("Online");
-    } else if (m_type == UPowerDeviceType::Battery) {
+    } else if (m_type == UPowerDeviceType::Battery || m_type == UPowerDeviceType::Mouse
+               || m_type == UPowerDeviceType::Keyboard) {
         m_energy = iface.property("Energy");
         m_energyFull = iface.property("EnergyFull");
         m_energyEmpty = iface.property("EnergyEmpty");
