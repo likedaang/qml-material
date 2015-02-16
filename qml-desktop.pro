@@ -44,7 +44,8 @@ HEADERS += \
     src/qquicklist/qobjectlistmodel.h \
     src/qquicklist/qquicklist.h \
     src/desktop/desktopfile.h \
-    src/desktop/desktopscrobbler.h
+    src/desktop/desktopscrobbler.h \
+    src/processhelper/processhelper.h
 
 OTHER_FILES = src/qmldir
 

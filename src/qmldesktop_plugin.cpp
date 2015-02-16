@@ -21,4 +21,6 @@ void DesktopPlugin::registerTypes(const char *uri)
     qmlRegisterType<DesktopFile>(uri, 0, 1, "DesktopFile");
     qmlRegisterType<DesktopScrobbler>(uri, 0, 1, "DesktopScrobbler");
     qmlRegisterUncreatableType<QObjectListModel>(uri, 0, 1, "QObjectListModel", "For cool animations");
+    
+    qmlRegisterSingletonType<ProcessHelper>(uri, 0, 1, "ProcessHelper", ProcessHelper::process_helper);
 }

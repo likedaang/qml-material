@@ -22,6 +22,8 @@
 #include "desktop/desktopfile.h"
 #include "desktop/desktopscrobbler.h"
 
+#include "processhelper/processhelper.h"
+
 class DesktopPlugin : public QQmlExtensionPlugin
 {
     Q_OBJECT
