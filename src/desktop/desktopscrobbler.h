@@ -37,7 +37,7 @@ public:
     }
 
 private:
-    QFileSystemWatcher fileWatcher;
+    QFileSystemWatcher *fileWatcher;
     QFileSystemWatcher *dirWatcher;
     QQuickList<DesktopFile> desktopList;
 private slots:
