@@ -34,11 +34,13 @@ DesktopScrobbler::DesktopScrobbler(QQuickItem *parent) : QQuickItem(parent) {
         entries << QString("~/.local/share/applications/%1").arg(localEntries.at(i));
     }
     for (int i = 0; i < entries.length(); i++){
-        desktopList << new DesktopFile(entries.at(i));
+        desktopList << new DesktopFile(entries.at(i), this);
     }
-    QFileSystemWatcher fileWatcher(entries);
-    QFileSystemWatcher *dirWatcher = new QFileSystemWatcher(QStringList() << "/usr/local/share/applications" << "/usr/share/applications" << "~/.local/share/applications");
-    connect(&fileWatcher, &QFileSystemWatcher::fileChanged, this, &DesktopScrobbler::processFileModification);
+    fileWatcher = new QFileSystemWatcher(entries, this);
+    dirWatcher = new QFileSystemWatcher(QStringList() 
+<< "/usr/local/share/applications" << "/usr/share/applications" << 
+"~/.local/share/applications", this);
+    connect(fileWatcher, &QFileSystemWatcher::fileChanged, this, &DesktopScrobbler::processFileModification);
     connect(dirWatcher, &QFileSystemWatcher::directoryChanged, this, &DesktopScrobbler::processDirChange);
 }
 
@@ -46,15 +48,19 @@ void DesktopScrobbler::processFileModification(const QString &path) {
     if (QFile::exists(path)){
         for (int i = 0; i < desktopList.length(); i++){
             if (desktopList.at(i)->property("location").toString() == path){
-                desktopList.replace(i, new DesktopFile(path));
+                DesktopFile *desktopFile = desktopList.at(i);
+                desktopList.replace(i, new DesktopFile(path, this));
+		delete desktopFile;
                 break;
             }
         }
     } else {
         for (int i = 0; i < desktopList.length(); i++){
             if (desktopList.at(i)->property("location").toString() == path){
+		DesktopFile *desktopFile = desktopList.at(i);
                 desktopList.removeAt(i);
-                fileWatcher.removePath(path);
+                fileWatcher->removePath(path);
+		delete desktopFile;
                 break;
             }
         }
@@ -73,10 +79,10 @@ void DesktopScrobbler::processDirChange(const QString &path){
     if (currentPath.length() != entryList.length()) {
         for (int i = 0; i < entryList.length(); i++){
             if (!currentPath.contains(path + "/" + entryList[i])) {
-                desktopList << new DesktopFile(path + "/" + entryList[i]);
+                desktopList << new DesktopFile(path + "/" + entryList[i], this);
                 emit desktopFilesChanged(desktopFiles());
-                fileWatcher.addPath(path + "/" + entryList[i]);
-                connect(&fileWatcher, &QFileSystemWatcher::fileChanged, this, &DesktopScrobbler::processFileModification);
+                fileWatcher->addPath(path + "/" + entryList[i]);
+                connect(fileWatcher, &QFileSystemWatcher::fileChanged, this, &DesktopScrobbler::processFileModification);
             }
         }
     }
