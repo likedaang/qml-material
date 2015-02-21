@@ -59,9 +59,15 @@ void DesktopFile::setLocation(QString location){
 
 void DesktopFile::processLocation(const QString &location) {
     QSettings desktopFile(location, QSettings::IniFormat);
+    QLocale locale;
+    QString fullLocale = locale.name();
+    QString onlyLocale = fullLocale;
+    onlyLocale.truncate(2);
     m_name = desktopFile.value("Desktop Entry/Name").toString();
+    m_localizedName = desktopFile.value(QString("Desktop Entry/Name[%1]").arg(fullLocale)).isNull() ? desktopFile.value(QString("Desktop Entry/Name[%1]").arg(onlyLocale)) : desktopFile.value(QString("Desktop Entry/Name[%1]").arg(fullLocale));
     m_exec = desktopFile.value("Desktop Entry/Exec").toString();
     m_comment = desktopFile.value("Desktop Entry/Comment");
+    m_localizedComment = desktopFile.value(QString("Desktop Entry/Comment[%1]").arg(fullLocale)).isNull() ? desktopFile.value(QString("Desktop Entry/Comment[%1]").arg(onlyLocale)) : desktopFile.value(QString("Desktop Entry/Comment[%1]").arg(fullLocale));
     QString tempIcon = desktopFile.value("Desktop Entry/Icon").toString();
     m_darkColor = desktopFile.value("Desktop Entry/X-Papyros-DarkColor");
     QStringList envList = QVariant(qgetenv("XDG_DATA_DIRS")).toString().split(":");
