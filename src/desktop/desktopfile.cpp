@@ -61,6 +61,7 @@ void DesktopFile::processLocation(const QString &location) {
     QSettings desktopFile(location, QSettings::IniFormat);
     m_name = desktopFile.value("Desktop Entry/Name").toString();
     m_exec = desktopFile.value("Desktop Entry/Exec").toString();
+    m_comment = desktopFile.value("Desktop Entry/Comment");
     QString tempIcon = desktopFile.value("Desktop Entry/Icon").toString();
     m_darkColor = desktopFile.value("Desktop Entry/X-Papyros-DarkColor");
     QStringList envList = QVariant(qgetenv("XDG_DATA_DIRS")).toString().split(":");
