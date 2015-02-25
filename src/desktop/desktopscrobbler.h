@@ -35,6 +35,8 @@ public:
     QObjectListModel* desktopFiles(){
         return desktopList.getModel();
     }
+    Q_INVOKABLE int getIndexByName(QString name); //localized also works
+    static int cmp(const DesktopFile *a, const DesktopFile *b);
 
 private:
     QFileSystemWatcher *fileWatcher;

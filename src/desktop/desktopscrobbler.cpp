@@ -36,6 +36,7 @@ DesktopScrobbler::DesktopScrobbler(QQuickItem *parent) : QQuickItem(parent) {
     for (int i = 0; i < entries.length(); i++){
         desktopList << new DesktopFile(entries.at(i), this);
     }
+    desktopList.sort(DesktopScrobbler::cmp);
     fileWatcher = new QFileSystemWatcher(entries, this);
     dirWatcher = new QFileSystemWatcher(QStringList() 
 << "/usr/local/share/applications" << "/usr/share/applications" << 
@@ -65,6 +66,7 @@ void DesktopScrobbler::processFileModification(const QString &path) {
             }
         }
     }
+    desktopList.sort(DesktopScrobbler::cmp);
     emit desktopFilesChanged(desktopFiles());
 }
 
@@ -80,10 +82,30 @@ void DesktopScrobbler::processDirChange(const QString &path){
         for (int i = 0; i < entryList.length(); i++){
             if (!currentPath.contains(path + "/" + entryList[i])) {
                 desktopList << new DesktopFile(path + "/" + entryList[i], this);
+                desktopList.sort(DesktopScrobbler::cmp);
                 emit desktopFilesChanged(desktopFiles());
                 fileWatcher->addPath(path + "/" + entryList[i]);
                 connect(fileWatcher, &QFileSystemWatcher::fileChanged, this, &DesktopScrobbler::processFileModification);
             }
         }
     }
+}
+
+int DesktopScrobbler::cmp(const DesktopFile *a, const DesktopFile *b) {
+        QString firstString = a->m_localizedName.isNull() ? a->m_name : a->m_localizedName.toString();
+        QString secondString = b->m_localizedName.isNull() ? b->m_name : a->m_localizedName.toString();
+        //int result = strcmp(firstString.toUtf8().constData(), secondString.toUtf8().constData());
+        int result = firstString.compare(secondString);
+        qDebug() << firstString << secondString << result;
+        return result;
+}
+
+int DesktopScrobbler::getIndexByName(QString name) {
+    for (int i = 0; i < desktopList.length(); i++) {
+        if (desktopList.at(i)->m_localizedName.toString().startsWith(name, Qt::CaseInsensitive) || desktopList.at(i)->m_name.startsWith(name, Qt::CaseInsensitive)) {
+            return i;
+            break;
+        }
+    }
+    return -1;
 }

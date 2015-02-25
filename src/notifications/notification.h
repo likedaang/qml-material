@@ -26,14 +26,14 @@
 class Notification : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString appName MEMBER m_app_name)
-    Q_PROPERTY(uint id MEMBER m_id)
-    Q_PROPERTY(QString appIcon MEMBER m_app_icon)
-    Q_PROPERTY(QString summary MEMBER m_summary)
-    Q_PROPERTY(QString body MEMBER m_body)
-    Q_PROPERTY(QStringList actions MEMBER m_actions)
-    Q_PROPERTY(QVariantMap hints MEMBER m_hints)
-    Q_PROPERTY(int expireTimeout MEMBER m_expire_timeout)
+    Q_PROPERTY(QString appName MEMBER m_app_name CONSTANT)
+    Q_PROPERTY(uint id MEMBER m_id CONSTANT)
+    Q_PROPERTY(QString appIcon MEMBER m_app_icon CONSTANT)
+    Q_PROPERTY(QString summary MEMBER m_summary CONSTANT)
+    Q_PROPERTY(QString body MEMBER m_body CONSTANT)
+    Q_PROPERTY(QStringList actions MEMBER m_actions CONSTANT)
+    Q_PROPERTY(QVariantMap hints MEMBER m_hints CONSTANT)
+    Q_PROPERTY(int expireTimeout MEMBER m_expire_timeout CONSTANT)
     Q_ENUMS(Urgency)
 public:
     enum Urgency {

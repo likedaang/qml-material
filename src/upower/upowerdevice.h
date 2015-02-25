@@ -31,21 +31,21 @@ class UPowerDevice : public QObject
 
     // We're using variants not because I am lazy, but because they will return an undefined
     // and it will be idiomatic JavaScript
-    Q_PROPERTY(UPowerDeviceType::Type type MEMBER m_type)
-    Q_PROPERTY(bool powerSupply MEMBER m_powerSupply)
-    Q_PROPERTY(QVariant online MEMBER m_online)
+    Q_PROPERTY(UPowerDeviceType::Type type MEMBER m_type CONSTANT)
+    Q_PROPERTY(bool powerSupply MEMBER m_powerSupply CONSTANT)
+    Q_PROPERTY(QVariant online MEMBER m_online CONSTANT)
     Q_PROPERTY(QVariant energy MEMBER m_energy NOTIFY changed)
-    Q_PROPERTY(QVariant energyFull MEMBER m_energyFull)
-    Q_PROPERTY(QVariant energyEmpty MEMBER m_energyEmpty)
+    Q_PROPERTY(QVariant energyFull MEMBER m_energyFull CONSTANT)
+    Q_PROPERTY(QVariant energyEmpty MEMBER m_energyEmpty CONSTANT)
     Q_PROPERTY(double voltage MEMBER m_voltage NOTIFY changed)
     Q_PROPERTY(QVariant energyRate MEMBER m_energyRate NOTIFY changed)
     Q_PROPERTY(QVariant timeToEmpty MEMBER m_timeToEmpty NOTIFY changed)
     Q_PROPERTY(QVariant timeToFull MEMBER m_timeToFull NOTIFY changed)
     Q_PROPERTY(QVariant percentage MEMBER m_percentage NOTIFY changed)
     Q_PROPERTY(QVariant state MEMBER m_state NOTIFY changed)
-    Q_PROPERTY(QVariant isRechargeable MEMBER m_isRechargeable)
-    Q_PROPERTY(QVariant capacity MEMBER m_capacity)
-    Q_PROPERTY(QVariant vendor MEMBER m_vendor)
+    Q_PROPERTY(QVariant isRechargeable MEMBER m_isRechargeable CONSTANT)
+    Q_PROPERTY(QVariant capacity MEMBER m_capacity CONSTANT)
+    Q_PROPERTY(QVariant vendor MEMBER m_vendor CONSTANT)
 
 public:
     explicit UPowerDevice(QString path, QObject *parent = 0);

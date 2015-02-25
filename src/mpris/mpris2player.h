@@ -32,7 +32,7 @@ class Mpris2Player : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QVariantMap metadata READ metadata NOTIFY metadataNotify)
-    Q_PROPERTY(QString name MEMBER name)
+    Q_PROPERTY(QString name MEMBER name CONSTANT)
     Q_PROPERTY(QString playbackStatus READ playbackStatus NOTIFY playbackStatusChanged)
 
 public:
