@@ -18,8 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDebug>
-
 #include <pulse/glib-mainloop.h>
 #include <pulse/volume.h>
 

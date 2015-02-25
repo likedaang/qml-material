@@ -20,7 +20,6 @@
 
 #include <linux/input.h>
 
-#include <QDebug>
 #include <qmath.h>
 
 #include "sound.h"

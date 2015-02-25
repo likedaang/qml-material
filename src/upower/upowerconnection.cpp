@@ -37,7 +37,6 @@ UPowerConnection::UPowerConnection(QQuickItem *parent)
 
 void UPowerConnection::reloadDevices()
 {
-    qDebug() << "Devices changed!";
 
     QDBusMessage msg = iface.call("EnumerateDevices");
     const QDBusArgument &arg = msg.arguments().at(0).value<QDBusArgument>();

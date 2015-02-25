@@ -25,23 +25,25 @@
 #include <QTextStream>
 #include <QSettings>
 #include <QLocale>
+#include <QProcess>
 
 class DesktopFile : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name MEMBER m_name)
-    Q_PROPERTY(QVariant localizedName MEMBER m_localizedName)
-    Q_PROPERTY(QVariant icon MEMBER m_icon)
-    Q_PROPERTY(QVariant comment MEMBER m_comment)
-    Q_PROPERTY(QString exec MEMBER m_exec)
-    Q_PROPERTY(QVariant darkColor MEMBER m_darkColor)
-    Q_PROPERTY(QVariant localizedComment MEMBER m_localizedComment)
+    Q_PROPERTY(QString name MEMBER m_name CONSTANT)
+    Q_PROPERTY(QVariant localizedName MEMBER m_localizedName CONSTANT)
+    Q_PROPERTY(QVariant icon MEMBER m_icon CONSTANT)
+    Q_PROPERTY(QVariant comment MEMBER m_comment CONSTANT)
+    Q_PROPERTY(QString exec MEMBER m_exec CONSTANT)
+    Q_PROPERTY(QVariant darkColor MEMBER m_darkColor CONSTANT)
+    Q_PROPERTY(QVariant localizedComment MEMBER m_localizedComment CONSTANT)
     Q_PROPERTY(QString location MEMBER m_location WRITE setLocation NOTIFY locationChanged)
 public:
     explicit DesktopFile(QString location = "", QObject *parent = 0);
     static QString locationFromFile(QString desktopName);
     static QString getEnvVar(int pid);
     void setLocation(QString location);
+    Q_INVOKABLE void launch();
 
     QString m_name;
     QVariant m_localizedName;

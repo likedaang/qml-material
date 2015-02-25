@@ -57,19 +57,28 @@ void DesktopFile::setLocation(QString location){
     processLocation(m_location);
 }
 
+void DesktopFile::launch() {
+    QString tempString = m_exec;
+    tempString.replace("%f", "", Qt::CaseInsensitive);
+    tempString.replace("%u", "", Qt::CaseInsensitive);
+    QProcess::startDetached(tempString);
+}
+
 void DesktopFile::processLocation(const QString &location) {
     QSettings desktopFile(location, QSettings::IniFormat);
+    desktopFile.setIniCodec("UTF-8");
+    desktopFile.beginGroup("Desktop Entry");
     QLocale locale;
     QString fullLocale = locale.name();
     QString onlyLocale = fullLocale;
     onlyLocale.truncate(2);
-    m_name = desktopFile.value("Desktop Entry/Name").toString();
-    m_localizedName = desktopFile.value(QString("Desktop Entry/Name[%1]").arg(fullLocale)).isNull() ? desktopFile.value(QString("Desktop Entry/Name[%1]").arg(onlyLocale)) : desktopFile.value(QString("Desktop Entry/Name[%1]").arg(fullLocale));
-    m_exec = desktopFile.value("Desktop Entry/Exec").toString();
-    m_comment = desktopFile.value("Desktop Entry/Comment");
-    m_localizedComment = desktopFile.value(QString("Desktop Entry/Comment[%1]").arg(fullLocale)).isNull() ? desktopFile.value(QString("Desktop Entry/Comment[%1]").arg(onlyLocale)) : desktopFile.value(QString("Desktop Entry/Comment[%1]").arg(fullLocale));
-    QString tempIcon = desktopFile.value("Desktop Entry/Icon").toString();
-    m_darkColor = desktopFile.value("Desktop Entry/X-Papyros-DarkColor");
+    m_name = desktopFile.value("Name").toString();
+    m_localizedName = desktopFile.value(QString("Name[%1]").arg(fullLocale)).isNull() ? desktopFile.value(QString("Name[%1]").arg(onlyLocale)) : desktopFile.value(QString("Name[%1]").arg(fullLocale));
+    m_exec = desktopFile.value("Exec").toString();
+    m_comment = desktopFile.value("Comment");
+    m_localizedComment = desktopFile.value(QString("Comment[%1]").arg(fullLocale)).isNull() ? desktopFile.value(QString("Comment[%1]").arg(onlyLocale)) : desktopFile.value(QString("Comment[%1]").arg(fullLocale));
+    QString tempIcon = desktopFile.value("Icon").toString();
+    m_darkColor = desktopFile.value("X-Papyros-DarkColor");
     QStringList envList = QVariant(qgetenv("XDG_DATA_DIRS")).toString().split(":");
     bool absoluteRet = QFile::exists(tempIcon);
     if (!absoluteRet) {

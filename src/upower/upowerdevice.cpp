@@ -34,7 +34,6 @@ UPowerDevice::UPowerDevice(QString path, QObject *parent)
 
 void UPowerDevice::reload()
 {
-    qDebug() << "Reloading device!";
 
     m_vendor = iface.property("Vendor");
 

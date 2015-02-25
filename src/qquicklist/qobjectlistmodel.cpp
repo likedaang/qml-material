@@ -158,10 +158,6 @@ bool QObjectListModel::moveRows(const QModelIndex & sourceParent, int sourceRow,
     Q_UNUSED(sourceParent);
     Q_UNUSED(destinationParent);
 
-    qDebug() << "moveRows :: sourceRow : " << sourceRow;
-    qDebug() << "moveRows :: count : " << count;
-    qDebug() << "moveRows :: destinationChild : " << destinationChild;
-
     if (sourceRow + count - 1 < destinationChild) {
         beginMoveRows(QModelIndex(), sourceRow, sourceRow + count - 1, QModelIndex(), destinationChild + 1);
         for (int i = sourceRow; i < sourceRow + count; i++) {

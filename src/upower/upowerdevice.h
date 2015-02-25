@@ -23,7 +23,6 @@
 
 #include <QObject>
 #include <QDBusInterface>
-#include <QDebug>
 #include "upowerdevicetype.h"
 
 class UPowerDevice : public QObject

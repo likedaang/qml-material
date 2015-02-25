@@ -25,7 +25,6 @@
 #include <QSignalMapper>
 #include <QList>
 #include "notification.h"
-#include <QDebug>
 #include <QQmlListProperty>
 #include "notificationserver.h"
 
@@ -45,7 +44,6 @@ public:
 
     NotificationAdaptor(QObject *parent, NotificationServer *server) : QDBusAbstractAdaptor(parent), availableId(1) {
         this->server = server;
-        qDebug() << "Adapter ready!";
     }
 
 public slots:
@@ -58,17 +56,14 @@ public slots:
         emit NotificationClosed(id, Requested);
     }
     void GetServerInformation(QString &name, QString &vendor, QString &version, QString &spec_version){
-        name = "Quantum OS Notification Server";
-        vendor = "Quantum OS";
+        name = "Papyros Notification Server";
+        vendor = "Papyros";
         version = "0.1";
         //not sure, I think so
         spec_version = "1.2";
     }
 
     uint Notify(QString app_name, uint replaces_id, QString app_icon, QString summary, QString body, QStringList actions, QVariantMap hints, int expire_timeout) {
-
-        qDebug() << "Notification" << app_name << summary << body << replaces_id;
-
         Notification *notification = new Notification(app_name, (replaces_id == 0 ? availableId++ : replaces_id), app_icon, summary, body, actions, hints, expire_timeout);
 
         if (expire_timeout == 0) {
@@ -76,8 +71,6 @@ public slots:
         }
 
         if (expire_timeout != -1) {
-            qDebug() << "Expiring in" << expire_timeout << "milliseconds";
-
             QSignalMapper *mapper = new QSignalMapper(this);
             QObject::connect(mapper, SIGNAL(mapped(QString)), this, SLOT(forTimer(QString)));
             QTimer *timer = new QTimer(this);
@@ -85,8 +78,6 @@ public slots:
             mapper->setMapping(timer, QVariant(notification->m_id).toString());
             timer->setSingleShot(true);
             timer->start(expire_timeout);
-        } else {
-            qDebug() << "Notification doesn't time out!";
         }
 
         if (replaces_id != 0) {
