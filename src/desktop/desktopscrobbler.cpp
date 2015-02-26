@@ -91,13 +91,10 @@ void DesktopScrobbler::processDirChange(const QString &path){
     }
 }
 
-int DesktopScrobbler::cmp(const DesktopFile *a, const DesktopFile *b) {
+bool DesktopScrobbler::cmp(const DesktopFile *a, const DesktopFile *b) {
         QString firstString = a->m_localizedName.isNull() ? a->m_name : a->m_localizedName.toString();
         QString secondString = b->m_localizedName.isNull() ? b->m_name : a->m_localizedName.toString();
-        //int result = strcmp(firstString.toUtf8().constData(), secondString.toUtf8().constData());
-        int result = firstString.compare(secondString);
-        qDebug() << firstString << secondString << result;
-        return result;
+        return firstString.toLower() > secondString.toLower();
 }
 
 int DesktopScrobbler::getIndexByName(QString name) {
