@@ -1,0 +1,343 @@
+QInotifyFileSystemWatcherEngine::addPaths: inotify_add_watch failed: No such file or directory
+QInotifyFileSystemWatcherEngine::addPaths: inotify_add_watch failed: No such file or directory
+qml: 
+QXcbConnection: XCB error: 148 (Unknown), sequence: 180, resource id: 0, major code: 140 (Unknown), minor code: 20
+qml: 
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-desktop-wallpaper.png
+qml: /usr/share/icons/hicolor/scalable/apps/bluetooth.svg
+qml: /usr/share/icons/hicolor/scalable/apps/bluetooth.svg
+qml: /usr/share/icons/hicolor/scalable/apps/brackets.svg
+qml: /usr/share/icons/HighContrast/scalable/apps/accessories-calculator.svg
+qml: 
+qml: /usr/share/icons/HighContrast/scalable/apps/accessories-character-map.svg
+qml: /usr/share/icons/hicolor/256x256/apps/cheese.png
+qml: /usr/share/pixmaps/CMakeSetup32.png
+qml: /usr/share/pixmaps/codeblocks.png
+qml: /usr/share/icons/hicolor/scalable/apps/gnome-color-manager.svg
+qml: /usr/share/icons/hicolor/scalable/apps/preferences-color.svg
+qml: /usr/share/icons/hicolor/scalable/apps/gnome-color-manager.svg
+qml: /usr/share/icons/hicolor/scalable/apps/gnome-color-manager.svg
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/preferences-system-time.svg
+qml: /usr/share/icons/hicolor/256x256/apps/dconf-editor.png
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-desktop-remote-desktop.png
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/accessories-dictionary.png
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/256x256/apps/baobab.png
+qml: /usr/share/icons/hicolor/256x256/apps/gnome-disks.png
+qml: /usr/share/icons/hicolor/scalable/apps/preferences-desktop-display.svg
+qml: /usr/share/icons/hicolor/256x256/apps/evince.png
+qml: /usr/share/icons/hicolor/256x256/apps/empathy.png
+qml: /usr/share/icons/HighContrast/256x256/apps/evolution.png
+qml: /usr/share/icons/HighContrast/scalable/apps/system-file-manager.svg
+qml: /usr/share/icons/hicolor/scalable/apps/final-term.svg
+qml: /usr/share/pixmaps/firefox-developer-icon.png
+qml: /usr/share/icons/HighContrast/scalable/apps/preferences-desktop-font.svg
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-system-monitor.svg
+qml: /usr/share/icons/hicolor/256x256/apps/google-chrome.png
+qml: /usr/share/icons/hicolor/scalable/apps/gparted.svg
+qml: /usr/share/icons/hicolor/256x256/apps/gtk3-demo.png
+qml: /usr/share/icons/HighContrast/scalable/apps/help-browser.svg
+qml: 
+qml: /usr/share/icons/hicolor/128x128/apps/cups.png
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/eog.svg
+qml: /usr/share/icons/hicolor/256x256/apps/inkscape.png
+qml: /usr/share/icons/hicolor/scalable/apps/journal.svg
+qml: /usr/share/icons/hicolor/scalable/apps/kate.svgz
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-network.png
+qml: 
+qml: 
+qml: 
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/knetattach.svgz
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-terminal.svg
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-system-monitor.svg
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-terminal.svg
+qml: /usr/share/pixmaps/lighttable.png
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: 
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-network.png
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-notifications.png
+qml: /usr/share/pixmaps/nvidia-settings.png
+qml: /usr/share/icons/hicolor/256x256/apps/goa-panel.png
+qml: 
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/poedit.svg
+qml: /usr/share/icons/hicolor/256x256/apps/popcorn-time.png
+qml: /usr/share/pixmaps/popcorntime.png
+qml: /usr/share/icons/hicolor/256x256/apps/gnome-power-manager.png
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-privacy.png
+qml: /usr/share/pixmaps/puddletag.png
+qml: /usr/share/icons/hicolor/128x128/apps/assistant.png
+qml: /usr/share/icons/hicolor/512x512/apps/QtProject-qtcreator.png
+qml: /usr/share/icons/hicolor/128x128/apps/designer.png
+qml: /usr/share/icons/hicolor/128x128/apps/linguist.png
+qml: /usr/share/icons/hicolor/128x128/apps/qdbusviewer.png
+qml: /usr/share/icons/hicolor/scalable/apps/qv4l2.svg
+qml: /usr/share/icons/hicolor/128x128/apps/assistant-qt4.png
+qml: 
+qml: /usr/share/icons/hicolor/128x128/apps/designer-qt4.png
+qml: /usr/share/icons/hicolor/128x128/apps/linguist-qt4.png
+qml: /usr/share/icons/hicolor/128x128/apps/qdbusviewer-qt4.png
+qml: /usr/share/icons/HighContrast/scalable/apps/preferences-desktop-locale.svg
+qml: /usr/share/icons/hicolor/scalable/apps/retext.svg
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/applets-screenshooter.png
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-search.png
+qml: /usr/share/icons/hicolor/scalable/apps/tracker.svg
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-sharing.png
+qml: /usr/share/icons/hicolor/scalable/apps/simplescreenrecorder.svg
+qml: /usr/share/pixmaps/skype.png
+qml: /usr/share/icons/hicolor/scalable/apps/multimedia-volume-control.svg
+qml: /usr/share/icons/hicolor/256x256/apps/sublime-text.png
+qml: /usr/share/icons/hicolor/256x256/apps/logview.png
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-system-monitor.svg
+qml: 
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-terminal.svg
+qml: /usr/share/icons/hicolor/scalable/apps/tomahawk.svg
+qml: /usr/share/icons/hicolor/256x256/apps/gnome-tweak-tool.png
+qml: /usr/share/icons/HighContrast/scalable/apps/preferences-desktop-accessibility.svg
+qml: /usr/share/icons/HighContrast/256x256/apps/system-users.png
+qml: /usr/share/pixmaps/xterm-color_48x48.xpm
+qml: /usr/share/icons/HighContrast/scalable/apps-extra/totem.svg
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/256x256/apps/vlc.png
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/web-browser.png
+qml: 
+qml: /usr/share/icons/hicolor/256x256/apps/gtk3-widget-factory.png
+qml: /usr/share/pixmaps/xterm-color_48x48.xpm
+qml: /usr/share/icons/hicolor/128x128/apps/designer-qt4.png
+qml: 
+qml: /usr/share/icons/hicolor/128x128/apps/assistant-qt4.png
+qml: /usr/share/icons/hicolor/scalable/apps/qv4l2.svg
+qml: /usr/share/icons/hicolor/128x128/apps/qdbusviewer.png
+qml: /usr/share/icons/hicolor/128x128/apps/linguist.png
+qml: /usr/share/icons/hicolor/128x128/apps/designer.png
+qml: /usr/share/icons/hicolor/512x512/apps/QtProject-qtcreator.png
+qml: /usr/share/icons/hicolor/128x128/apps/assistant.png
+qml: /usr/share/pixmaps/puddletag.png
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-privacy.png
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/256x256/apps/gnome-power-manager.png
+qml: /usr/share/pixmaps/popcorntime.png
+qml: /usr/share/icons/hicolor/256x256/apps/popcorn-time.png
+qml: /usr/share/icons/hicolor/scalable/apps/poedit.svg
+qml: 
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/256x256/apps/goa-panel.png
+qml: /usr/share/pixmaps/nvidia-settings.png
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-notifications.png
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-network.png
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: 
+qml: 
+qml: /usr/share/pixmaps/lighttable.png
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-terminal.svg
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-system-monitor.svg
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-terminal.svg
+qml: /usr/share/icons/hicolor/scalable/apps/knetattach.svgz
+qml: 
+qml: 
+qml: 
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-network.png
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/kate.svgz
+qml: /usr/share/icons/hicolor/scalable/apps/journal.svg
+qml: /usr/share/icons/hicolor/256x256/apps/inkscape.png
+qml: /usr/share/icons/hicolor/scalable/apps/eog.svg
+qml: 
+qml: /usr/share/icons/hicolor/128x128/apps/cups.png
+qml: 
+qml: /usr/share/icons/HighContrast/scalable/apps/help-browser.svg
+qml: /usr/share/icons/hicolor/256x256/apps/gtk3-demo.png
+qml: /usr/share/icons/hicolor/scalable/apps/gparted.svg
+qml: /usr/share/icons/hicolor/256x256/apps/google-chrome.png
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-system-monitor.svg
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: 
+qml: /usr/share/icons/HighContrast/scalable/apps/preferences-desktop-font.svg
+qml: /usr/share/pixmaps/firefox-developer-icon.png
+qml: /usr/share/icons/hicolor/scalable/apps/final-term.svg
+qml: /usr/share/icons/HighContrast/scalable/apps/system-file-manager.svg
+qml: /usr/share/icons/HighContrast/256x256/apps/evolution.png
+qml: /usr/share/icons/hicolor/256x256/apps/empathy.png
+qml: /usr/share/icons/hicolor/256x256/apps/evince.png
+qml: /usr/share/icons/hicolor/scalable/apps/preferences-desktop-display.svg
+qml: /usr/share/icons/hicolor/256x256/apps/gnome-disks.png
+qml: /usr/share/icons/hicolor/256x256/apps/baobab.png
+qml: 
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/accessories-dictionary.png
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-desktop-remote-desktop.png
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/256x256/apps/dconf-editor.png
+qml: /usr/share/icons/hicolor/scalable/apps/preferences-system-time.svg
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/gnome-color-manager.svg
+qml: /usr/share/icons/hicolor/scalable/apps/gnome-color-manager.svg
+qml: /usr/share/icons/hicolor/scalable/apps/preferences-color.svg
+qml: /usr/share/icons/hicolor/scalable/apps/gnome-color-manager.svg
+qml: /usr/share/pixmaps/codeblocks.png
+qml: /usr/share/pixmaps/CMakeSetup32.png
+qml: /usr/share/icons/hicolor/256x256/apps/cheese.png
+qml: /usr/share/icons/HighContrast/scalable/apps/accessories-character-map.svg
+qml: 
+qml: /usr/share/icons/HighContrast/scalable/apps/accessories-calculator.svg
+qml: /usr/share/icons/hicolor/scalable/apps/brackets.svg
+qml: /usr/share/icons/hicolor/scalable/apps/bluetooth.svg
+qml: /usr/share/icons/hicolor/scalable/apps/bluetooth.svg
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-desktop-wallpaper.png
+qml: 
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/256x256/apps/gnome-disks.png
+qml: /usr/share/icons/hicolor/scalable/apps/preferences-desktop-display.svg
+qml: /usr/share/icons/hicolor/256x256/apps/evince.png
+qml: /usr/share/icons/hicolor/256x256/apps/empathy.png
+qml: /usr/share/icons/HighContrast/256x256/apps/evolution.png
+qml: /usr/share/icons/HighContrast/scalable/apps/system-file-manager.svg
+qml: /usr/share/icons/hicolor/scalable/apps/final-term.svg
+qml: /usr/share/pixmaps/firefox-developer-icon.png
+qml: /usr/share/icons/HighContrast/scalable/apps/preferences-desktop-font.svg
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-system-monitor.svg
+qml: /usr/share/icons/hicolor/256x256/apps/google-chrome.png
+qml: /usr/share/icons/hicolor/scalable/apps/gparted.svg
+qml: /usr/share/icons/hicolor/256x256/apps/gtk3-demo.png
+qml: /usr/share/icons/HighContrast/scalable/apps/help-browser.svg
+qml: 
+qml: /usr/share/icons/hicolor/128x128/apps/cups.png
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/eog.svg
+qml: /usr/share/icons/hicolor/256x256/apps/inkscape.png
+qml: /usr/share/icons/hicolor/scalable/apps/journal.svg
+qml: /usr/share/icons/hicolor/scalable/apps/kate.svgz
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-network.png
+qml: 
+qml: 
+qml: 
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/knetattach.svgz
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-terminal.svg
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-system-monitor.svg
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-terminal.svg
+qml: /usr/share/pixmaps/lighttable.png
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: 
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-network.png
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-notifications.png
+qml: /usr/share/pixmaps/nvidia-settings.png
+qml: /usr/share/icons/hicolor/256x256/apps/goa-panel.png
+qml: 
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/hicolor/scalable/apps/poedit.svg
+qml: /usr/share/icons/hicolor/256x256/apps/popcorn-time.png
+qml: /usr/share/pixmaps/popcorntime.png
+qml: /usr/share/icons/hicolor/256x256/apps/gnome-power-manager.png
+qml: 
+qml: 
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-privacy.png
+qml: /usr/share/pixmaps/puddletag.png
+qml: /usr/share/icons/hicolor/128x128/apps/assistant.png
+qml: /usr/share/icons/hicolor/512x512/apps/QtProject-qtcreator.png
+qml: /usr/share/icons/hicolor/128x128/apps/designer.png
+qml: /usr/share/icons/hicolor/128x128/apps/linguist.png
+qml: /usr/share/icons/hicolor/128x128/apps/qdbusviewer.png
+qml: /usr/share/icons/hicolor/scalable/apps/qv4l2.svg
+qml: /usr/share/icons/hicolor/128x128/apps/assistant-qt4.png
+qml: 
+qml: /usr/share/icons/hicolor/128x128/apps/designer-qt4.png
+qml: /usr/share/icons/hicolor/128x128/apps/linguist-qt4.png
+qml: /usr/share/icons/hicolor/128x128/apps/qdbusviewer-qt4.png
+qml: /usr/share/icons/HighContrast/scalable/apps/preferences-desktop-locale.svg
+qml: /usr/share/icons/hicolor/scalable/apps/retext.svg
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/applets-screenshooter.png
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-search.png
+qml: /usr/share/icons/hicolor/scalable/apps/tracker.svg
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/preferences-system-sharing.png
+qml: /usr/share/icons/hicolor/scalable/apps/simplescreenrecorder.svg
+qml: /usr/share/pixmaps/skype.png
+qml: /usr/share/icons/hicolor/scalable/apps/multimedia-volume-control.svg
+qml: /usr/share/icons/hicolor/256x256/apps/sublime-text.png
+qml: /usr/share/icons/hicolor/256x256/apps/logview.png
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-system-monitor.svg
+qml: 
+qml: /usr/share/icons/HighContrast/scalable/apps/utilities-terminal.svg
+qml: /usr/share/icons/hicolor/scalable/apps/tomahawk.svg
+qml: /usr/share/icons/hicolor/256x256/apps/gnome-tweak-tool.png
+qml: /usr/share/icons/HighContrast/scalable/apps/preferences-desktop-accessibility.svg
+qml: /usr/share/icons/HighContrast/256x256/apps/system-users.png
+qml: /usr/share/pixmaps/xterm-color_48x48.xpm
+qml: /usr/share/icons/HighContrast/scalable/apps-extra/totem.svg
+qml: /usr/share/icons/hicolor/scalable/apps/
+qml: /usr/share/icons/hicolor/256x256/apps/vlc.png
+qml: 
+qml: /usr/share/icons/HighContrast/256x256/apps/web-browser.png
+qml: 
+qml: /usr/share/icons/hicolor/256x256/apps/gtk3-widget-factory.png
+qml: /usr/share/pixmaps/xterm-color_48x48.xpm
+qml: /usr/share/icons/hicolor/128x128/apps/designer-qt4.png
+qml: 
+qml: /usr/share/icons/hicolor/128x128/apps/assistant-qt4.png
+qml: /usr/share/icons/hicolor/scalable/apps/qv4l2.svg

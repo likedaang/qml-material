@@ -79,47 +79,46 @@ void DesktopFile::processLocation(const QString &location) {
     m_localizedComment = desktopFile.value(QString("Comment[%1]").arg(fullLocale)).isNull() ? desktopFile.value(QString("Comment[%1]").arg(onlyLocale)) : desktopFile.value(QString("Comment[%1]").arg(fullLocale));
     QString tempIcon = desktopFile.value("Icon").toString();
     m_darkColor = desktopFile.value("X-Papyros-DarkColor");
-    QStringList envList = QVariant(qgetenv("XDG_DATA_DIRS")).toString().split(":");
+    QStringList envList;
+    if (qEnvironmentVariableIsEmpty("XDG_DATA_DIRS")) {
+	   envList <<  "/usr/local/share/" << "/usr/share/";
+    } else {
+        envList = QVariant(qgetenv("XDG_DATA_DIRS")).toString().split(":");
+    }
     bool absoluteRet = QFile::exists(tempIcon);
     if (!absoluteRet) {
-        //we're only looking in hicolor and highcontrast, *for now*, other themes will not be that hard too add later on
+        if (tempIcon.endsWith(".png", Qt::CaseInsensitive) ||
+            tempIcon.endsWith(".svg", Qt::CaseInsensitive) ||
+            tempIcon.endsWith(".xpm", Qt::CaseInsensitive))
+        {
+            tempIcon.truncate(tempIcon.length() - 4);
+        }
+        //we're only looking in hicolor and highcontrast, *for now*, other themes will not be that hard to add later on
         for (int i = 0; i < envList.length(); i++){
-            QString scalable = envList[i] + "/icons/hicolor/scalable/apps/" + tempIcon;
-            QString highContrastScalable = envList[i] + "/icons/HighContrast/scalable/apps/" + tempIcon;
-            QString highContrastScalableExtra = envList[i] + "/icons/HighContrast/scalable/apps-extra/" + tempIcon;
-            m_icon = QFile::exists(scalable) ? scalable : (QFile::exists(scalable + ".svg") ? scalable + ".svg" : (QFile::exists(scalable + ".svgz") ? scalable + ".svgz" : ""));
-            m_icon = m_icon == "" ? (QFile::exists(highContrastScalable) ? highContrastScalable : (QFile::exists(highContrastScalable + ".svg") ? highContrastScalable + ".svg" : (QFile::exists(highContrastScalable + ".svgz") ? highContrastScalable + ".svgz" : ""))) : m_icon;
-            m_icon = m_icon == "" ? (QFile::exists(highContrastScalableExtra) ? highContrastScalableExtra : (QFile::exists(highContrastScalableExtra + ".svg") ? highContrastScalableExtra + ".svg" : (QFile::exists(highContrastScalableExtra + ".svgz") ? highContrastScalableExtra + ".svgz" : ""))) : m_icon;
-            if (m_icon != ""){
+            QString iconTemplate = envList[i] + "icons/%1/%2/apps/%3";
+            QString firstScalable = iconTemplate.arg("hicolor").arg("scalable").arg(tempIcon) + ".svg";
+            QString secondScalable = iconTemplate.arg("HighContrast").arg("scalable").arg(tempIcon) + ".svg";
+            m_icon = QFile::exists(firstScalable) ? firstScalable : (QFile::exists(firstScalable + "z") ? firstScalable + "z" : (QFile::exists(secondScalable) ? secondScalable : (QFile::exists(secondScalable + "z") ? secondScalable + "z" : "")));
+            if (m_icon != "") {
                 break;
-            } else {
-                QStringList sizesList;
-                sizesList << "512x512" << "256x256" << "128x128";
-                for (int j = 0; j < sizesList.length(); j++) {
-                    QString noscalable = envList[i] + "/icons/hicolor/" + sizesList[j] + "/apps/" + tempIcon;
-                    if (QFile::exists(noscalable)) {
-                        m_icon = noscalable;
-                        break;
-                    } else if (QFile::exists(noscalable + ".png")) {
-                        m_icon = noscalable + ".png";
-                        break;
-                    }
-                }
-                if (m_icon != "") {
+            }
+            QStringList sizesList;
+            sizesList << "512x512" << "256x256" << "128x128";
+            for (int j = 0; j < sizesList.length(); j++) {
+               QString firstNotScalable = iconTemplate.arg("hicolor").arg(sizesList[j]).arg(tempIcon) + ".png";
+               QString secondNotScalable = iconTemplate.arg("HighContrast").arg(sizesList[j]).arg(tempIcon) + ".png";
+               m_icon = QFile::exists(firstNotScalable) ? firstNotScalable : (QFile::exists(secondNotScalable) ? secondScalable : "");
+               if (m_icon != "") {
                     break;
-                } else {
-                    QString highContrast = envList[i] + "/icons/HighContrast/256x256/apps/" + tempIcon;
-                    m_icon = QFile::exists(highContrast) ? highContrast : (QFile::exists(highContrast + ".png") ? highContrast + ".png" : "");
-                    if (m_icon != "") {
-                        break;
-                    } else {
-                        QString pixmap = envList[i] + "/pixmaps/" + tempIcon;
-                        m_icon = QFile::exists(pixmap) ? pixmap : (QFile::exists(pixmap + ".png") ? pixmap + ".png" : (QFile::exists(pixmap + ".xpm") ? pixmap + ".xpm" : ""));
-                        if (m_icon != "") {
-                            break;
-                        }
-                    }
-                }
+               }
+            }
+            if (m_icon != "") {
+                break;
+            }
+            QString pixmap = envList[i] + "pixmaps/" + tempIcon;
+            m_icon = QFile::exists(pixmap + ".png") ? pixmap + ".png" : (QFile::exists(pixmap + ".xpm") ? pixmap + ".xpm" : "");
+            if (m_icon != "") {
+                break;
             }
         }
     }
