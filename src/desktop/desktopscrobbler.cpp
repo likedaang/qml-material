@@ -94,7 +94,7 @@ void DesktopScrobbler::processDirChange(const QString &path){
 bool DesktopScrobbler::cmp(const DesktopFile *a, const DesktopFile *b) {
         QString firstString = a->m_localizedName.isNull() ? a->m_name : a->m_localizedName.toString();
         QString secondString = b->m_localizedName.isNull() ? b->m_name : a->m_localizedName.toString();
-        return firstString.toLower() > secondString.toLower();
+        return firstString.toLower() < secondString.toLower();
 }
 
 int DesktopScrobbler::getIndexByName(QString name) {
