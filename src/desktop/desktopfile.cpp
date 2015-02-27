@@ -107,7 +107,7 @@ void DesktopFile::processLocation(const QString &location) {
             for (int j = 0; j < sizesList.length(); j++) {
                QString firstNotScalable = iconTemplate.arg("hicolor").arg(sizesList[j]).arg(tempIcon) + ".png";
                QString secondNotScalable = iconTemplate.arg("HighContrast").arg(sizesList[j]).arg(tempIcon) + ".png";
-               m_icon = QFile::exists(firstNotScalable) ? firstNotScalable : (QFile::exists(secondNotScalable) ? secondScalable : "");
+               m_icon = QFile::exists(firstNotScalable) ? firstNotScalable : (QFile::exists(secondNotScalable) ? secondNotScalable : "");
                if (m_icon != "") {
                     break;
                }
