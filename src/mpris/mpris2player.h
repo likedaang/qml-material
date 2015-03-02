@@ -34,6 +34,9 @@ class Mpris2Player : public QObject
     Q_PROPERTY(QVariantMap metadata READ metadata NOTIFY metadataNotify)
     Q_PROPERTY(QString name MEMBER name CONSTANT)
     Q_PROPERTY(QString playbackStatus READ playbackStatus NOTIFY playbackStatusChanged)
+    Q_PROPERTY(QVariant canSeek MEMBER m_canSeek CONSTANT)
+    Q_PROPERTY(QVariant canGoNext MEMBER m_canGoNext CONSTANT)
+    Q_PROPERTY(QVariant canGoPrevious MEMBER m_canGoPrevious CONSTANT)
 
 public:
     explicit Mpris2Player(QString serviceName, QObject *parent = 0);
@@ -54,6 +57,9 @@ public:
     QDBusInterface iface;
     QDBusInterface playerInterface;
     QString name;
+    QVariant m_canGoNext;
+    QVariant m_canSeek;
+    QVariant m_canGoPrevious;
 
 signals:
     void metadataNotify();

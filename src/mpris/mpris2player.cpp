@@ -26,7 +26,7 @@ Mpris2Player::Mpris2Player(QString serviceName, QObject *parent) : QObject(paren
               "org.mpris.MediaPlayer2.Player"),
         playerInterface(serviceName, "/org/mpris/MediaPlayer2",
                         "org.mpris.MediaPlayer2"),
-        name(playerInterface.property("Identity").toString())
+        name(playerInterface.property("Identity").toString()), m_canGoNext(iface.property("CanGoNext")), m_canSeek(iface.property("CanSeek")), m_canGoPrevious(iface.property("CanGoPrevious"))
 {
     QDBusConnection::sessionBus().connect(serviceName,
             "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties",
