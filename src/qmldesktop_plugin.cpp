@@ -23,4 +23,6 @@ void DesktopPlugin::registerTypes(const char *uri)
     qmlRegisterUncreatableType<QObjectListModel>(uri, 0, 1, "QObjectListModel", "For cool animations");
     
     qmlRegisterSingletonType<ProcessHelper>(uri, 0, 1, "ProcessHelper", ProcessHelper::process_helper);
+
+    qmlRegisterSingletonType<LoginHelper>(uri, 0, 1, "LoginHelper", LoginHelper::login_helper);
 }

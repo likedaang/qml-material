@@ -24,7 +24,8 @@ SOURCES += \
     src/keyeventfilter/keyeventfilter.cpp \
     src/qquicklist/qobjectlistmodel.cpp \
     src/desktop/desktopfile.cpp \
-    src/desktop/desktopscrobbler.cpp
+    src/desktop/desktopscrobbler.cpp \
+    src/loginhelper/loginhelper.cpp
 
 HEADERS += \
     src/mpris/mprisconnection.h \
@@ -45,7 +46,8 @@ HEADERS += \
     src/qquicklist/qquicklist.h \
     src/desktop/desktopfile.h \
     src/desktop/desktopscrobbler.h \
-    src/processhelper/processhelper.h
+    src/processhelper/processhelper.h \
+    src/loginhelper/loginhelper.h
 
 OTHER_FILES = src/qmldir
 

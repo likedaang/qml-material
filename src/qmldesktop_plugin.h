@@ -24,6 +24,8 @@
 
 #include "processhelper/processhelper.h"
 
+#include "loginhelper/loginhelper.h"
+
 class DesktopPlugin : public QQmlExtensionPlugin
 {
     Q_OBJECT

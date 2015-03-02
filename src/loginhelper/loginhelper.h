@@ -1,6 +1,6 @@
 /*
  * QML Desktop - Set of tools written in C++ for QML
- * 
+ *
  * Copyright (C) 2015 Bogdan Cuza <bogdan.cuza@hotmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,34 +17,29 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PROCESSHELPER
-#define PROCESSHELPER
+#ifndef LOGINHELPER_H
+#define LOGINHELPER_H
 
 #include <QObject>
-#include <QProcess>
+#include <QDBusInterface>
 #include <QQmlEngine>
 #include <QJSEngine>
 
-class ProcessHelper : public QObject {
-  
+class LoginHelper : public QObject
+{
     Q_OBJECT
-  
-public:
-  
-    explicit ProcessHelper(QObject *parent = 0) : QObject(parent) {
-    }
-  
-    static QObject *process_helper(QQmlEngine *engine, QJSEngine *scriptEngine) {
-        Q_UNUSED(engine)
-        Q_UNUSED(scriptEngine)
 
-        ProcessHelper *helper = new ProcessHelper();
-        return helper;
-    }
-  
-    Q_INVOKABLE bool startDetached(QString exec) {
-        return QProcess::startDetached(exec);
-    }
+public:
+    LoginHelper(QObject *parent = 0);
+
+    Q_INVOKABLE void powerOff();
+    Q_INVOKABLE void reboot();
+
+    static QObject *login_helper(QQmlEngine *engine, QJSEngine *scriptEngine);
+
+private:
+    QDBusInterface conn;
+	
 };
 
-#endif // PROCESSHELPER
+#endif // LOGINHELPER_H 

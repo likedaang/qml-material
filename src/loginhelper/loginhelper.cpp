@@ -1,6 +1,6 @@
 /*
  * QML Desktop - Set of tools written in C++ for QML
- * 
+ *
  * Copyright (C) 2015 Bogdan Cuza <bogdan.cuza@hotmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,34 +17,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PROCESSHELPER
-#define PROCESSHELPER
+#include "loginhelper.h"
 
-#include <QObject>
-#include <QProcess>
-#include <QQmlEngine>
-#include <QJSEngine>
+LoginHelper::LoginHelper(QObject *parent) : QObject(parent), conn("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", QDBusConnection::systemBus()) {}
 
-class ProcessHelper : public QObject {
-  
-    Q_OBJECT
-  
-public:
-  
-    explicit ProcessHelper(QObject *parent = 0) : QObject(parent) {
-    }
-  
-    static QObject *process_helper(QQmlEngine *engine, QJSEngine *scriptEngine) {
-        Q_UNUSED(engine)
-        Q_UNUSED(scriptEngine)
+void LoginHelper::reboot() {
+    conn.call("Reboot", true);
+}
 
-        ProcessHelper *helper = new ProcessHelper();
-        return helper;
-    }
-  
-    Q_INVOKABLE bool startDetached(QString exec) {
-        return QProcess::startDetached(exec);
-    }
-};
+void LoginHelper::powerOff() {
+    conn.call("PowerOff", true);
+}
 
-#endif // PROCESSHELPER
+QObject* LoginHelper::login_helper(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(engine)
+    Q_UNUSED(scriptEngine)
+
+    LoginHelper *helper = new LoginHelper();
+    return helper;
+}
