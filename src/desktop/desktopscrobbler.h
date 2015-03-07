@@ -23,12 +23,16 @@
 #include <QQuickItem>
 #include <QFileSystemWatcher>
 #include <QDir>
+#include <QQmlParserStatus>
+#include <cmath>
 #include "../qquicklist/qquicklist.h"
 #include "desktopfile.h"
 
 class DesktopScrobbler : public QQuickItem {
     Q_OBJECT
     Q_PROPERTY(QObjectListModel* desktopFiles READ desktopFiles NOTIFY desktopFilesChanged)
+    Q_PROPERTY(int iconSize MEMBER m_iconSize NOTIFY iconSizeChanged)
+    Q_INTERFACES(QQmlParserStatus)
 
 public:
     DesktopScrobbler(QQuickItem *parent = 0);
@@ -38,10 +42,19 @@ public:
     Q_INVOKABLE int getIndexByName(QString name); //localized also works
     static bool cmp(const DesktopFile *a, const DesktopFile *b);
 
+    int m_iconSize;
+
+    virtual void componentComplete();
+
+signals:
+
+    void iconSizeChanged();
+
 private:
     QFileSystemWatcher *fileWatcher;
     QFileSystemWatcher *dirWatcher;
     QQuickList<DesktopFile> desktopList;
+    QStringList processedIconSizes;
 private slots:
     void processFileModification(const QString &path);
     void processDirChange(const QString &path);

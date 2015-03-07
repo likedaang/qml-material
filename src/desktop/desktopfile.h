@@ -39,7 +39,7 @@ class DesktopFile : public QObject
     Q_PROPERTY(QVariant localizedComment MEMBER m_localizedComment CONSTANT)
     Q_PROPERTY(QString location MEMBER m_location WRITE setLocation NOTIFY locationChanged)
 public:
-    explicit DesktopFile(QString location = "", QObject *parent = 0);
+    explicit DesktopFile(QString location = "", QStringList iconSizes = QStringList(), QObject *parent = 0);
     static QString locationFromFile(QString desktopName);
     static QString getEnvVar(int pid);
     void setLocation(QString location);
@@ -53,6 +53,7 @@ public:
     QVariant m_darkColor;
     QVariant m_comment;
     QVariant m_localizedComment;
+    QStringList m_iconSizes;
 
 signals:
     void locationChanged();

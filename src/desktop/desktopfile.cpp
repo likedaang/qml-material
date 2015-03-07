@@ -19,7 +19,7 @@
 
 #include "desktopfile.h"
 
-DesktopFile::DesktopFile(QString location, QObject *parent) : QObject(parent) {
+DesktopFile::DesktopFile(QString location, QStringList iconSizes, QObject *parent) : QObject(parent), m_iconSizes(iconSizes) {
     if (location == "" && m_location != "") {
         processLocation(m_location);
     } else if (location != "") {
@@ -102,11 +102,9 @@ void DesktopFile::processLocation(const QString &location) {
             if (m_icon != "") {
                 break;
             }
-            QStringList sizesList;
-            sizesList << "512x512" << "256x256" << "128x128";
-            for (int j = 0; j < sizesList.length(); j++) {
-               QString firstNotScalable = iconTemplate.arg("hicolor").arg(sizesList[j]).arg(tempIcon) + ".png";
-               QString secondNotScalable = iconTemplate.arg("HighContrast").arg(sizesList[j]).arg(tempIcon) + ".png";
+            for (int j = 0; j < m_iconSizes.length(); j++) {
+               QString firstNotScalable = iconTemplate.arg("hicolor").arg(m_iconSizes[j]).arg(tempIcon) + ".png";
+               QString secondNotScalable = iconTemplate.arg("HighContrast").arg(m_iconSizes[j]).arg(tempIcon) + ".png";
                m_icon = QFile::exists(firstNotScalable) ? firstNotScalable : (QFile::exists(secondNotScalable) ? secondNotScalable : "");
                if (m_icon != "") {
                     break;
