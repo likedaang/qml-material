@@ -24,7 +24,6 @@ DesktopScrobbler::DesktopScrobbler(QQuickItem *parent) : QQuickItem(parent) {}
 void DesktopScrobbler::componentComplete() {
     QList<int> sizesList;
     sizesList << 1024 << 512 << 256 << 192 << 128 << 96  << 72 << 64 << 48 << 36 << 32 << 24 << 22 << 16 << 8;
-    qDebug() << m_iconSize;
     int diff = abs(m_iconSize - sizesList[0]);
     int num1 = sizesList[0];
     for (int a = 0; a < sizesList.length(); a++) {
@@ -36,7 +35,6 @@ void DesktopScrobbler::componentComplete() {
     }
     int num2 = sizesList.indexOf(num1);
     processedIconSizes = QString("%1x%1;%2x%2;%3x%3;%4x%4;%5x%5").arg(sizesList[num2-2]).arg(sizesList[num2-1]).arg(num1).arg(sizesList[num2+1]).arg(sizesList[num2+2]).split(";");
-    qDebug() << processedIconSizes;
     QStringList entries;
     QStringList globalEntries = QDir("/usr/local/share/applications").entryList(QStringList() << "*.desktop");
     QStringList anotherGlobalEntries = QDir("/usr/share/applications").entryList(QStringList() << "*.desktop");
