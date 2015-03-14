@@ -1,123 +1,133 @@
-/* 
+/*
  * QML Desktop - Set of tools written in C++ for QML
- * 
+ *
  * Copyright (C) 2014 Bogdan Cuza <bogdan.cuza@hotmail.com>
- * 
+ *               2015 Michael Spencer <sonrisesoftware@gmail.com>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 2.1 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "desktopscrobbler.h"
 
-DesktopScrobbler::DesktopScrobbler(QQuickItem *parent) : QQuickItem(parent) {}
+DesktopScrobbler::DesktopScrobbler(QQuickItem *parent)
+        : QQuickItem(parent) {}
 
-void DesktopScrobbler::componentComplete() {
-    QList<int> sizesList;
-    sizesList << 1024 << 512 << 256 << 192 << 128 << 96  << 72 << 64 << 48 << 36 << 32 << 24 << 22 << 16 << 8;
-    int diff = abs(m_iconSize - sizesList[0]);
-    int num1 = sizesList[0];
-    for (int a = 0; a < sizesList.length(); a++) {
-        if (diff > abs(m_iconSize - sizesList[a]))
-        {
-            diff = abs(m_iconSize - sizesList[a]);
-            num1 = sizesList[a];
+QStringList DesktopScrobbler::filesInPaths(QStringList paths, QStringList filters)
+{
+    QStringList allFiles;
+
+    for (QString path : paths) {
+        QStringList fileNames = QDir(path).entryList(filters);
+
+        for (QString fileName : fileNames) {
+            allFiles << path + "/" + fileName;
         }
     }
-    int num2 = sizesList.indexOf(num1);
-    processedIconSizes = QString("%1x%1;%2x%2;%3x%3;%4x%4;%5x%5").arg(sizesList[num2-2]).arg(sizesList[num2-1]).arg(num1).arg(sizesList[num2+1]).arg(sizesList[num2+2]).split(";");
-    QStringList entries;
-    QStringList globalEntries = QDir("/usr/local/share/applications").entryList(QStringList() << "*.desktop");
-    QStringList anotherGlobalEntries = QDir("/usr/share/applications").entryList(QStringList() << "*.desktop");
-    QStringList localEntries = QDir("~/.local/share/applications").entryList(QStringList() << "*.desktop");
-    for (int i = 0; i < globalEntries.length(); i++) {
-        entries << QString("/usr/local/share/applications/%1").arg(globalEntries.at(i));
-    }
-    for (int i = 0; i < anotherGlobalEntries.length(); i++) {
-        entries << QString("/usr/share/applications/%1").arg(anotherGlobalEntries.at(i));
-    }
-    for (int i = 0; i < localEntries.length(); i++) {
-        entries << QString("~/.local/share/applications/%1").arg(localEntries.at(i));
-    }
-    for (int i = 0; i < entries.length(); i++){
-        desktopList << new DesktopFile(entries.at(i), processedIconSizes, this);
-    }
-    desktopList.sort(DesktopScrobbler::cmp);
-    fileWatcher = new QFileSystemWatcher(entries, this);
-    dirWatcher = new QFileSystemWatcher(QStringList() 
-<< "/usr/local/share/applications" << "/usr/share/applications" << 
-"~/.local/share/applications", this);
-    connect(fileWatcher, &QFileSystemWatcher::fileChanged, this, &DesktopScrobbler::processFileModification);
-    connect(dirWatcher, &QFileSystemWatcher::directoryChanged, this, &DesktopScrobbler::processDirChange);
+
+    return allFiles;
 }
 
-void DesktopScrobbler::processFileModification(const QString &path) {
-    if (QFile::exists(path)){
-        for (int i = 0; i < desktopList.length(); i++){
-            if (desktopList.at(i)->property("location").toString() == path){
-                DesktopFile *desktopFile = desktopList.at(i);
-                desktopList.replace(i, new DesktopFile(path, processedIconSizes, this));
-		delete desktopFile;
+void DesktopScrobbler::componentComplete()
+{
+    QStringList paths; paths << "~/.local/share/applications"
+                             << "/usr/local/share/applications"
+                             << "/usr/share/applications";
+    QStringList filter; filter << "*.desktop";
+
+    QStringList files = filesInPaths(paths, filter);
+
+    for (QString fileName : files) {
+        desktopList << new DesktopFile(fileName, this);
+    }
+
+    desktopList.sort(DesktopScrobbler::compare)
+    ;
+    fileWatcher = new QFileSystemWatcher(files, this);
+    dirWatcher = new QFileSystemWatcher(paths, this);
+
+    connect(fileWatcher, &QFileSystemWatcher::fileChanged,
+            this, &DesktopScrobbler::onFileChanged);
+    connect(dirWatcher, &QFileSystemWatcher::directoryChanged,
+            this, &DesktopScrobbler::onDirectoryChanged);
+}
+
+void DesktopScrobbler::onFileChanged(const QString &path)
+{
+    if (QFile::exists(path)) {
+        for (DesktopFile *desktopFile : desktopList) {
+            if (desktopFile->m_path == path) {
+                desktopFile->load();
                 break;
             }
         }
     } else {
-        for (int i = 0; i < desktopList.length(); i++){
-            if (desktopList.at(i)->property("location").toString() == path){
-		DesktopFile *desktopFile = desktopList.at(i);
-                desktopList.removeAt(i);
+        for (DesktopFile *desktopFile : desktopList) {
+            if (desktopFile->m_path == path) {
+                desktopList.removeOne(desktopFile);
                 fileWatcher->removePath(path);
-		delete desktopFile;
+                delete desktopFile;
+
                 break;
             }
         }
     }
-    desktopList.sort(DesktopScrobbler::cmp);
+
+    desktopList.sort(DesktopScrobbler::compare);
+
     emit desktopFilesChanged(desktopFiles());
 }
 
-void DesktopScrobbler::processDirChange(const QString &path){
-    QStringList entryList = QDir(path).entryList(QStringList() << "*.desktop");
-    QStringList currentPath;
-    for (int i = 0; i < desktopList.length(); i++){
-        if (desktopList[i]->m_location.startsWith(path)){
-            currentPath << desktopList[i]->m_location;
-        }
+DesktopFile *DesktopScrobbler::desktopFileForPath(const QString &path)
+{
+    for (DesktopFile *desktopFile : desktopList) {
+        if (desktopFile->m_path == path)
+            return desktopFile;
     }
-    if (currentPath.length() != entryList.length()) {
-        for (int i = 0; i < entryList.length(); i++){
-            if (!currentPath.contains(path + "/" + entryList[i])) {
-                desktopList << new DesktopFile(path + "/" + entryList[i], processedIconSizes, this);
-                desktopList.sort(DesktopScrobbler::cmp);
-                emit desktopFilesChanged(desktopFiles());
-                fileWatcher->addPath(path + "/" + entryList[i]);
-                connect(fileWatcher, &QFileSystemWatcher::fileChanged, this, &DesktopScrobbler::processFileModification);
-            }
+
+    return nullptr;
+}
+
+void DesktopScrobbler::onDirectoryChanged(const QString &directory)
+{
+    QStringList files = QDir(directory).entryList(QStringList() << "*.desktop");
+
+    for (QString file : files) {
+        QString path = directory + "/" + file;
+
+        if (desktopFileForPath(path) == nullptr) {
+            desktopList << new DesktopFile(path, this);
+            desktopList.sort(DesktopScrobbler::compare);
+
+            emit desktopFilesChanged(desktopFiles());
+
+            fileWatcher->addPath(path);
         }
     }
 }
 
-bool DesktopScrobbler::cmp(const DesktopFile *a, const DesktopFile *b) {
-        QString firstString = a->m_localizedName.isNull() ? a->m_name : a->m_localizedName.toString();
-        QString secondString = b->m_localizedName.isNull() ? b->m_name : a->m_localizedName.toString();
-        return firstString.toLower() < secondString.toLower();
+bool DesktopScrobbler::compare(const DesktopFile *a, const DesktopFile *b)
+{
+    return a->m_name.toLower() < b->m_name.toLower();
 }
 
-int DesktopScrobbler::getIndexByName(QString name) {
+int DesktopScrobbler::indexOfName(QString name)
+{
     for (int i = 0; i < desktopList.length(); i++) {
-        if (desktopList.at(i)->m_localizedName.toString().startsWith(name, Qt::CaseInsensitive) || desktopList.at(i)->m_name.startsWith(name, Qt::CaseInsensitive)) {
+        DesktopFile *desktopFile = desktopList.at(i);
+
+        if (desktopFile->m_name.startsWith(name, Qt::CaseInsensitive))
             return i;
-            break;
-        }
     }
     return -1;
 }

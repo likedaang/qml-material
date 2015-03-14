@@ -2,6 +2,7 @@
  * QML Desktop - Set of tools written in C++ for QML
  *
  * Copyright (C) 2014 Bogdan Cuza <bogdan.cuza@hotmail.com>
+ *               2015 Michael Spencer <sonrisesoftware@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -25,42 +26,44 @@
 #include <QDir>
 #include <QQmlParserStatus>
 #include <cmath>
+
 #include "../qquicklist/qquicklist.h"
 #include "desktopfile.h"
 
-class DesktopScrobbler : public QQuickItem {
+class DesktopScrobbler : public QQuickItem
+{
     Q_OBJECT
-    Q_PROPERTY(QObjectListModel* desktopFiles READ desktopFiles NOTIFY desktopFilesChanged)
-    Q_PROPERTY(int iconSize MEMBER m_iconSize NOTIFY iconSizeChanged)
+
+    Q_PROPERTY(QObjectListModel *desktopFiles READ desktopFiles NOTIFY desktopFilesChanged)
     Q_INTERFACES(QQmlParserStatus)
 
 public:
     DesktopScrobbler(QQuickItem *parent = 0);
-    QObjectListModel* desktopFiles(){
+
+    QObjectListModel *desktopFiles()
+    {
         return desktopList.getModel();
     }
-    Q_INVOKABLE int getIndexByName(QString name); //localized also works
-    static bool cmp(const DesktopFile *a, const DesktopFile *b);
 
-    int m_iconSize;
+    static bool compare(const DesktopFile *a, const DesktopFile *b);
+
+    Q_INVOKABLE int indexOfName(QString name);
 
     virtual void componentComplete();
 
 signals:
+    void desktopFilesChanged(QObjectListModel *);
 
-    void iconSizeChanged();
+private slots:
+    void onFileChanged(const QString &path);
+    void onDirectoryChanged(const QString &directory);
 
 private:
     QFileSystemWatcher *fileWatcher;
     QFileSystemWatcher *dirWatcher;
     QQuickList<DesktopFile> desktopList;
-    QStringList processedIconSizes;
-private slots:
-    void processFileModification(const QString &path);
-    void processDirChange(const QString &path);
-
-signals:
-    void desktopFilesChanged(QObjectListModel*);
+    DesktopFile *desktopFileForPath(const QString &path);
+    QStringList filesInPaths(QStringList paths, QStringList filters);
 };
 
 #endif // DESKTOPSCROBBLER

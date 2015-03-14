@@ -2,6 +2,7 @@
  * QML Desktop - Set of tools written in C++ for QML
  *
  * Copyright (C) 2014 Bogdan Cuza <bogdan.cuza@hotmail.com>
+ *               2015 Michael Spencer <sonrisesoftware@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -19,26 +20,45 @@
 
 #include "desktopfile.h"
 
-DesktopFile::DesktopFile(QString location, QStringList iconSizes, QObject *parent) : QObject(parent), m_iconSizes(iconSizes) {
-    if (location == "" && m_location != "") {
-        processLocation(m_location);
-    } else if (location != "") {
-        m_location = location;
-        emit locationChanged();
-        processLocation(location);
+#include <QFile>
+#include <QFileInfo>
+#include <QTextStream>
+#include <QLocale>
+#include <QProcess>
+
+DesktopFile::DesktopFile(QString path, QObject *parent)
+        : QObject(parent)
+{
+    if (path.startsWith("/")) {
+        setPath(path);
+    } else {
+        setAppId(path);
     }
 }
 
-QString DesktopFile::locationFromFile(QString desktopName){
-    bool globalRet = QFile::exists("/usr/share/applications/" + desktopName);
-    bool anotherGlobalRet = QFile::exists("/usr/local/share/applications/" + desktopName);
-    bool localRet = QFile::exists("~/.local/share/applications/" + desktopName);
-    if (!globalRet && !anotherGlobalRet && !localRet)
-        return "";
-    return globalRet ? "/usr/share/applications/" + desktopName : (anotherGlobalRet ? "/usr/local/share/applications/" + desktopName : "~/.local/share/applications/" + desktopName);
+QString DesktopFile::pathFromAppId(QString appId)
+{
+    QStringList paths;
+    paths << "~/.local/share/applications"
+          << "/usr/local/share/applications/"
+          << "/usr/share/applications/";
+
+    return findFileInPaths(appId + ".desktop", paths);
 }
 
-QString DesktopFile::getEnvVar(int pid){
+QString DesktopFile::findFileInPaths(QString fileName, QStringList paths)
+{
+    for (QString path : paths) {
+        if (QFile::exists(path + "/" + fileName)) {
+            return path + "/" + fileName;
+        }
+    }
+
+    return "";
+}
+
+QString DesktopFile::getEnvVar(int pid)
+{
     QFile envFile(QString("/proc/%1/environ").arg(pid));
     if(!envFile.open(QIODevice::ReadOnly | QIODevice::Text))
         return "";
@@ -51,76 +71,79 @@ QString DesktopFile::getEnvVar(int pid){
     return rx.cap(1);
 }
 
-void DesktopFile::setLocation(QString location){
-    m_location = location;
-    emit locationChanged();
-    processLocation(m_location);
+void DesktopFile::setAppId(QString appId)
+{
+    setPath(pathFromAppId(appId));
+
+    load();
 }
 
-void DesktopFile::launch() {
+void DesktopFile::setPath(QString path)
+{
+    m_path = path;
+    m_isValid = m_path != "";
+
+    // Extracts "papyros-files" from "/path/to/papyros-files.desktop"
+    m_appId = QFileInfo(path).baseName();
+
+    emit pathChanged();
+    emit isValidChanged();
+
+    load();
+}
+
+void DesktopFile::launch()
+{
     QString tempString = m_exec;
     tempString.replace("%f", "", Qt::CaseInsensitive);
     tempString.replace("%u", "", Qt::CaseInsensitive);
     QProcess::startDetached(tempString);
+
+    // TODO: Set DESKTOP_FILE env variable
+    // TODO: Set Qt and Gtk env variables to force the use of Wayland
 }
 
-void DesktopFile::processLocation(const QString &location) {
-    QSettings desktopFile(location, QSettings::IniFormat);
-    desktopFile.setIniCodec("UTF-8");
-    desktopFile.beginGroup("Desktop Entry");
+QVariant DesktopFile::localizedValue(const QSettings &desktopFile, QString key)
+{
     QLocale locale;
     QString fullLocale = locale.name();
     QString onlyLocale = fullLocale;
     onlyLocale.truncate(2);
-    m_name = desktopFile.value("Name").toString();
-    m_localizedName = desktopFile.value(QString("Name[%1]").arg(fullLocale)).isNull() ? desktopFile.value(QString("Name[%1]").arg(onlyLocale)) : desktopFile.value(QString("Name[%1]").arg(fullLocale));
-    m_exec = desktopFile.value("Exec").toString();
-    m_comment = desktopFile.value("Comment");
-    m_localizedComment = desktopFile.value(QString("Comment[%1]").arg(fullLocale)).isNull() ? desktopFile.value(QString("Comment[%1]").arg(onlyLocale)) : desktopFile.value(QString("Comment[%1]").arg(fullLocale));
-    QString tempIcon = desktopFile.value("Icon").toString();
-    m_darkColor = desktopFile.value("X-Papyros-DarkColor");
-    QStringList envList;
-    if (qEnvironmentVariableIsEmpty("XDG_DATA_DIRS")) {
-	   envList <<  "/usr/local/share/" << "/usr/share/";
+
+    QStringList keys;
+    keys << QString("%1[%2]").arg(key).arg(fullLocale)
+         << QString("%1[%2]").arg(key).arg(onlyLocale)
+         << key;
+
+    for (QString keyName : keys) {
+        QVariant value = desktopFile.value(keyName);
+
+        if (!value.isNull())
+            return value;
+    }
+
+    return QVariant();
+}
+
+void DesktopFile::load()
+{
+    if (m_path == "") {
+        m_name = "";
+        m_exec = "";
+        m_comment = "";
+        m_darkColor = "";
+        m_iconName = "";
     } else {
-        envList = QVariant(qgetenv("XDG_DATA_DIRS")).toString().split(":");
+        QSettings desktopFile(m_path, QSettings::IniFormat);
+        desktopFile.setIniCodec("UTF-8");
+        desktopFile.beginGroup("Desktop Entry");
+
+        m_name = localizedValue(desktopFile, "Name").toString();
+        m_exec = desktopFile.value("Exec").toString();
+        m_comment = localizedValue(desktopFile, "Comment").toString();
+        m_darkColor = desktopFile.value("X-Papyros-DarkColor").toString();
+        m_iconName = desktopFile.value("Icon").toString();
     }
-    bool absoluteRet = QFile::exists(tempIcon);
-    if (!absoluteRet) {
-        if (tempIcon.endsWith(".png", Qt::CaseInsensitive) ||
-            tempIcon.endsWith(".svg", Qt::CaseInsensitive) ||
-            tempIcon.endsWith(".xpm", Qt::CaseInsensitive))
-        {
-            tempIcon.truncate(tempIcon.length() - 4);
-        }
-        //we're only looking in hicolor and highcontrast, *for now*, other themes will not be that hard to add later on
-        for (int i = 0; i < envList.length(); i++){
-            QString iconTemplate = envList[i] + "icons/%1/%2/apps/%3";
-            QString firstScalable = iconTemplate.arg("hicolor").arg("scalable").arg(tempIcon) + ".svg";
-            QString secondScalable = iconTemplate.arg("HighContrast").arg("scalable").arg(tempIcon) + ".svg";
-            m_icon = QFile::exists(firstScalable) ? firstScalable : (QFile::exists(firstScalable + "z") ? firstScalable + "z" : (QFile::exists(secondScalable) ? secondScalable : (QFile::exists(secondScalable + "z") ? secondScalable + "z" : "")));
-            if (m_icon != "") {
-                break;
-            }
-            for (int j = 0; j < m_iconSizes.length(); j++) {
-               QString firstNotScalable = iconTemplate.arg("hicolor").arg(m_iconSizes[j]).arg(tempIcon) + ".png";
-               QString secondNotScalable = iconTemplate.arg("HighContrast").arg(m_iconSizes[j]).arg(tempIcon) + ".png";
-               m_icon = QFile::exists(firstNotScalable) ? firstNotScalable : (QFile::exists(secondNotScalable) ? secondNotScalable : "");
-               if (m_icon != "") {
-                    break;
-               }
-            }
-            if (m_icon != "") {
-                break;
-            }
-            QString pixmap = envList[i] + "pixmaps/" + tempIcon;
-            m_icon = QFile::exists(pixmap + ".png") ? pixmap + ".png" : (QFile::exists(pixmap + ".xpm") ? pixmap + ".xpm" : "");
-            if (m_icon != "") {
-                break;
-            }
-        }
-    }
-    else {
-        m_icon = tempIcon;
-    }
+
+    emit dataChanged();
 }
