@@ -1,6 +1,7 @@
 /*
  * QML Desktop - Set of tools written in C++ for QML
  * Copyright (C) 2014 Bogdan Cuza <bogdan.cuza@hotmail.com>
+ *               2015 Michael Spencer <sonrisesoftware@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -25,6 +26,7 @@
 #include <QDBusConnection>
 #include <QObject>
 #include "notification.h"
+#include "../qquicklist/qquicklist.h"
 
 class NotificationAdaptor;
 
@@ -36,16 +38,20 @@ class NotificationServer : public QQuickItem
 public:
     explicit NotificationServer(QQuickItem *parent = new QQuickItem());
 
+    QObjectListModel *notifications()
+    {
+        return notificationsList.getModel();
+    }
+
 public slots:
     void closeNotification(int id);
+    void onNotificationUpdated(int id, Notification *notification);
+    void onNotificationAdded(int id, Notification *notification);
+    void onNotificationRemoved(int id);
 
 private:
     NotificationAdaptor* adaptor;
-
-signals:
-    void notificationUpdated(int id, QVariant notification);
-    void notificationAdded(int id, QVariant notification);
-    void notificationRemoved(int id);
+    QQuickList<Notification> notificationsList;
 };
 
 #endif // NOTIFICATIONSERVER_H

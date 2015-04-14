@@ -1,6 +1,7 @@
 /*
  * QML Desktop - Set of tools written in C++ for QML
  * Copyright (C) 2014 Bogdan Cuza <bogdan.cuza@hotmail.com>
+ *               2015 Michael Spencer <sonrisesoftware@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -47,24 +48,32 @@ public:
     }
 
 public slots:
-    QStringList GetCapabilities() {
+    QStringList GetCapabilities() 
+    {
         return QStringList() << "body";
     }
-    void CloseNotification(uint id) {
-        server->notificationRemoved(id);
+
+    void CloseNotification(uint id) 
+    {
+        server->onNotificationRemoved(id);
 
         emit NotificationClosed(id, Requested);
     }
-    void GetServerInformation(QString &name, QString &vendor, QString &version, QString &spec_version){
+
+    void GetServerInformation(QString &name, QString &vendor, QString &version, QString &spec_version)
+    {
         name = "Papyros Notification Server";
         vendor = "Papyros";
         version = "0.1";
-        //not sure, I think so
-        spec_version = "1.2";
+        spec_version = "1.2"; // TODO: Check that this is correct
     }
 
-    uint Notify(QString app_name, uint replaces_id, QString app_icon, QString summary, QString body, QStringList actions, QVariantMap hints, int expire_timeout) {
-        Notification *notification = new Notification(app_name, (replaces_id == 0 ? availableId++ : replaces_id), app_icon, summary, body, actions, hints, expire_timeout);
+    uint Notify(QString app_name, uint replaces_id, QString app_icon, QString summary, 
+            QString body, QStringList actions, QVariantMap hints, int expire_timeout) 
+    {
+        Notification *notification = new Notification(app_name, 
+                (replaces_id == 0 ? availableId++ : replaces_id), 
+                app_icon, summary, body, actions, hints, expire_timeout);
 
         if (expire_timeout == 0) {
             expire_timeout = 2500;
@@ -81,16 +90,17 @@ public slots:
         }
 
         if (replaces_id != 0) {
-            server->notificationUpdated(replaces_id, QVariant(QMetaType::QObjectStar, &notification));
+            server->onNotificationUpdated(replaces_id, notification);
         } else {
-            server->notificationAdded(notification->m_id, QVariant(QMetaType::QObjectStar, &notification));
+            server->onNotificationAdded(notification->m_id, notification);
         }
 
         return notification->m_id;
     }
 
-    void closeNotification(int id) {
-        server->notificationRemoved(id);
+    void closeNotification(int id) 
+    {
+        server->onNotificationRemoved(id);
         emit NotificationClosed(id, Dismissed);
     }
 
@@ -100,8 +110,9 @@ signals:
 
 private slots:
 
-    void forTimer(QString id) {
-        server->notificationRemoved(id.toInt());
+    void forTimer(QString id) 
+    {
+        server->onNotificationRemoved(id.toInt());
         emit NotificationClosed(QVariant(id).toUInt(), Expired);
     }
 
