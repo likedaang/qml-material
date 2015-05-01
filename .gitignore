@@ -1,8 +1,13 @@
+*.o
 .qmake.stash
+*.so
+moc*
 Makefile
 tests/tst_material
 *.o
 *.pro.user*
+*.pro.user
+*~
 build
 *.qmlproject.user*
 *~
